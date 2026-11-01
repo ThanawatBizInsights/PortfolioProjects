@@ -1,0 +1,147 @@
+{
+  "title": "ยิงแอดแล้วยอดขายขึ้น = แอดเวิร์ก?",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "coverSec": 3.3,
+  "safeZone": {
+    "top": 270,
+    "bottom": 560,
+    "left": 60,
+    "right": 120
+  },
+  "scenes": [
+    {
+      "id": "s1-hook",
+      "type": "hook",
+      "durationSec": 3.6,
+      "mascot": "idle",
+      "kicker": "ยิงแอดเพิ่ม → ยอดขายขึ้น",
+      "chart": {
+        "series": [
+          {
+            "label": "ค่าแอด",
+            "values": [
+              2,
+              2.4,
+              3,
+              4.2,
+              5.6,
+              7
+            ]
+          },
+          {
+            "label": "ยอดขาย",
+            "values": [
+              3,
+              3.3,
+              4.1,
+              5,
+              6.6,
+              7.4
+            ]
+          }
+        ],
+        "note": "ตัวเลขสมมติ"
+      },
+      "headline": "แปลว่าแอดเวิร์ก\nจริงเหรอ?",
+      "highlight": "จริงเหรอ?"
+    },
+    {
+      "id": "s2-rain",
+      "type": "chart",
+      "durationSec": 4.4,
+      "mascot": "surprised",
+      "heading": "ลองดูวันฝนตกก่อน",
+      "chart": {
+        "series": [
+          {
+            "label": "ร่มขายได้",
+            "values": [
+              1,
+              1.2,
+              4.8,
+              5.5,
+              1.4,
+              5.2
+            ]
+          },
+          {
+            "label": "เดลิเวอรี่",
+            "values": [
+              3,
+              3.2,
+              6.4,
+              7,
+              3.4,
+              6.8
+            ]
+          }
+        ],
+        "note": "ตัวเลขสมมติ"
+      },
+      "lines": [
+        "สองเส้นขึ้นลงพร้อมกันเป๊ะ"
+      ]
+    },
+    {
+      "id": "s3-cause",
+      "type": "cause",
+      "durationSec": 4.8,
+      "mascot": "think",
+      "question": "ร่มทำให้คนหิว?",
+      "answerLead": "ไม่ใช่ ตัวการจริงคือ",
+      "cause": "ฝนตก",
+      "effects": [
+        "ร่มขายดี",
+        "สั่งข้าวเยอะ"
+      ]
+    },
+    {
+      "id": "s4-define",
+      "type": "define",
+      "durationSec": 4.4,
+      "mascot": "idle",
+      "items": [
+        {
+          "term": "Correlation",
+          "meaning": "ขึ้นลงไปด้วยกัน"
+        },
+        {
+          "term": "Causation",
+          "meaning": "อันหนึ่งทำให้อีกอันเกิด"
+        }
+      ]
+    },
+    {
+      "id": "s5-ads",
+      "type": "list",
+      "durationSec": 5.6,
+      "mascot": "think",
+      "heading": "กลับมาที่แอด\nเดือนที่ยิงหนัก อาจมี…",
+      "items": [
+        "11.11",
+        "เงินเดือนเพิ่งออก",
+        "ร้านจัดโปรพอดี"
+      ],
+      "footer": "ยอดขายเลยขึ้นจากหลายอย่าง\nไม่ใช่แอดอย่างเดียว"
+    },
+    {
+      "id": "s6-question",
+      "type": "question",
+      "durationSec": 4.2,
+      "mascot": "happy",
+      "kicker": "ก่อนสรุป ถามข้อเดียว",
+      "question": "ช่วงนั้นมีอะไร\nเปลี่ยนพร้อมกัน\nอีกไหม?",
+      "highlight": "เปลี่ยนพร้อมกัน"
+    },
+    {
+      "id": "s7-cta",
+      "type": "cta",
+      "durationSec": 3.2,
+      "mascot": "happy",
+      "action": "เซฟไว้\nใช้ตอนดูผล 11.11",
+      "sub": "จะได้ไม่สรุปผลแคมเปญผิด"
+    }
+  ]
+}

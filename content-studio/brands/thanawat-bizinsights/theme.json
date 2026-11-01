@@ -1,0 +1,19 @@
+{
+  "brandName": "Thanawat BizInsights",
+  "colors": {
+    "bg": "#0E1A2B",
+    "bg2": "#1B2D45",
+    "surface": "#22364F",
+    "text": "#F7F4EC",
+    "muted": "#A9B6C7",
+    "accent": "#FFB627",
+    "accent2": "#3DD6C4",
+    "warn": "#FF6B6B",
+    "good": "#7BD88F"
+  },
+  "fonts": {
+    "heading": { "family": "Prompt", "files": [{ "weight": 600, "file": "Prompt-SemiBold.ttf" }, { "weight": 700, "file": "Prompt-Bold.ttf" }] },
+    "body": { "family": "Noto Sans Thai", "files": [{ "weight": 400, "file": "NotoSansThai-Regular.ttf" }, { "weight": 600, "file": "NotoSansThai-SemiBold.ttf" }, { "weight": 800, "file": "NotoSansThai-ExtraBold.ttf" }] }
+  },
+  "mascot": { "enabled": true, "color": "#3DD6C4", "belly": "#F7F4EC" }
+}
