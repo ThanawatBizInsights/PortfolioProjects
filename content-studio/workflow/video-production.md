@@ -17,6 +17,8 @@ This writes:
 - `qc/export-frames-sheet.png`: 10 frames pulled from the exported file, to check playback
 - `qc/ffprobe.txt`
 
+For a quick preview while tweaking, run `node render.mjs --clip --out=out/video.mp4` inside `renderer/`. It renders the first 6 s of the sample spec in about 15 s; use `--clip=8-13` for a different range, and add `--spec`/`--theme` for a real package. Preview clips are raw renders. Use `render-package.sh` for the final upload file, which gets the yuv420p, audio track and QC steps.
+
 For live preview, run `cd content-studio/renderer && npx remotion studio src/index.ts` (it uses `examples/`).
 
 The browser is the pre-installed Chromium headless shell. Set `REMOTION_BROWSER=/path/to/chrome` to override it. On a machine without it, Remotion downloads its own.

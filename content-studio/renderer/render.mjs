@@ -1,6 +1,10 @@
-// Usage:
+// Usage (run from content-studio/renderer):
+//   node render.mjs --out=out/video.mp4                      full video from examples/ (sample spec + theme)
+//   node render.mjs --clip --out=out/clip.mp4                quick preview: first 6 s
+//   node render.mjs --clip=8-13 --out=out/clip.mp4           preview of seconds 8 to 13
 //   node render.mjs --spec <spec.json> --theme <theme.json> --out <file.mp4>
-//   node render.mjs --spec <spec.json> --theme <theme.json> --stills <dir> [--safe]   (QC frames: middle of every scene)
+//   node render.mjs --spec <spec.json> --theme <theme.json> --stills <dir> [--safe]   (QC frames: middle + end of every scene)
+// Flags accept both "--key value" and "--key=value". Without --spec/--theme the examples/ files are used.
 import { bundle } from '@remotion/bundler';
 import { renderMedia, renderStill, selectComposition } from '@remotion/renderer';
 import fs from 'node:fs';
@@ -8,14 +12,20 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const args = Object.fromEntries(
-  process.argv.slice(2).reduce((acc, a, i, arr) => {
-    if (a.startsWith('--')) acc.push([a.slice(2), arr[i + 1] && !arr[i + 1].startsWith('--') ? arr[i + 1] : true]);
-    return acc;
-  }, []),
-);
-if (!args.spec || !args.theme || (!args.out && !args.stills)) {
-  console.error('Need --spec, --theme and --out or --stills');
+const args = {};
+const argv = process.argv.slice(2);
+for (let i = 0; i < argv.length; i++) {
+  const a = argv[i];
+  if (!a.startsWith('--')) continue;
+  const eq = a.indexOf('=');
+  if (eq !== -1) args[a.slice(2, eq)] = a.slice(eq + 1);
+  else if (argv[i + 1] !== undefined && !argv[i + 1].startsWith('--')) args[a.slice(2)] = argv[++i];
+  else args[a.slice(2)] = true;
+}
+args.spec ??= path.join(here, 'examples/spec.example.json');
+args.theme ??= path.join(here, 'examples/theme.example.json');
+if (!args.out && !args.stills) {
+  console.error('Need --out=<file.mp4> (or --stills=<dir>). See the usage notes at the top of render.mjs.');
   process.exit(1);
 }
 const spec = JSON.parse(fs.readFileSync(args.spec, 'utf8'));
@@ -50,7 +60,20 @@ if (args.stills) {
 } else {
   fs.mkdirSync(path.dirname(path.resolve(args.out)), { recursive: true });
   let lastPct = -1;
+  // --clip renders a short preview instead of the whole video.
+  let frameRange = null;
+  if (args.clip) {
+    const [a, b] = args.clip === true ? [0, 6] : String(args.clip).split('-').map(Number);
+    if (!(a >= 0 && b > a)) {
+      console.error('--clip must look like --clip or --clip=8-13 (seconds)');
+      process.exit(1);
+    }
+    const last = composition.durationInFrames - 1;
+    frameRange = [Math.min(Math.round(a * composition.fps), last), Math.min(Math.round(b * composition.fps) - 1, last)];
+    console.log(`Clip: frames ${frameRange[0]}-${frameRange[1]} (${a}s to ${Math.min(b, composition.durationInFrames / composition.fps)}s)`);
+  }
   await renderMedia({
+    frameRange,
     composition,
     serveUrl,
     codec: 'h264',

@@ -41,6 +41,10 @@ Full details are in `content-studio/workflow/`. Start with `content-studio/READM
 # Render + finalise + QC a package (writes media/ and qc/ inside the package)
 content-studio/scripts/render-package.sh <package-dir> content-studio/brands/<brand>/theme.json <name>
 
+# Quick preview clip (first 6 s, sample spec) / full sample render; run inside content-studio/renderer
+node render.mjs --clip --out=out/video.mp4      # or --clip=8-13 for seconds 8 to 13
+node render.mjs --spec <spec.json> --theme <theme.json> --out=out/full.mp4
+
 # Live preview / tweak animations
 cd content-studio/renderer && npx remotion studio src/index.ts
 
