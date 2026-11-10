@@ -31,9 +31,9 @@
       "imagePrompt": "A friendly glossy 3D chat bubble and a glowing pencil writing on a floating glass card, small sparkles around, centered composition with empty space at the top",
       "image": "",
       "mascot": {
-        "mood": "happy",
-        "say": "",
-        "look": "auto"
+        "pose": "default",
+        "placement": "corner",
+        "say": ""
       }
     },
     {
@@ -43,9 +43,9 @@
       "imagePrompt": "A small cute 3D character looking puzzled at a foggy cloud-shaped speech bubble, next to a neat glowing checklist card, comparison concept",
       "image": "",
       "mascot": {
-        "mood": "think",
-        "say": "เคยเป็นแบบนี้ไหมครับ",
-        "look": "auto"
+        "pose": "default",
+        "placement": "right",
+        "say": "เคยเป็นแบบนี้ไหมครับ"
       }
     },
     {
@@ -110,9 +110,9 @@
       "imagePrompt": "",
       "image": "",
       "mascot": {
-        "mood": "talk",
-        "say": "ลองทีละข้อก็ได้ครับ",
-        "look": "auto"
+        "pose": "default",
+        "placement": "right",
+        "say": "ลองทีละข้อก็ได้ครับ"
       }
     }
   ],
@@ -146,8 +146,13 @@
     {
       "at": "2026-11-10T10:00:00.000Z",
       "event": "voice set to ครับ; mascot added to 3 slides"
+    },
+    {
+      "at": "2026-11-10T12:00:00.000Z",
+      "event": "migrated: provider=claude, whale mascot replaced by the Claude mascot (default pose)"
     }
   ],
   "createdAt": "2026-11-10T09:00:00.000Z",
-  "updatedAt": "2026-11-10T09:00:00.000Z"
+  "updatedAt": "2026-11-10T09:00:00.000Z",
+  "provider": "claude"
 }

@@ -24,11 +24,15 @@ Friendly, practical, plain Thai, "พี่ที่ลองมาแล้ว�
 English tool names stay in English (Claude, prompt, Artifacts, Vercel). Every new term gets a one-line Thai explanation.
 
 ## Name (confirmed 2026-11-10)
-On slides: **balena studio** wordmark (lowercase, matching the logo). The Facebook Page name stays "Bluewhalelabs - เข้าใจ AI ให้มากขึ้น".
+**Balena Studio**, shown with the owner's real logo (`assets/brand/balena-studio-logo.png`, extracted from the supplied logo image; shape, proportions and colours preserved). The Facebook Page name stays "Bluewhalelabs - เข้าใจ AI ให้มากขึ้น".
 
-## Mascot
-**น้องบาเลน่า**, an original pixel-art blue whale ("balena" = whale), drawn in code (`apps/carousel-studio/components/PixelWhale.tsx`) and owned by the brand. Expressions: idle, happy (squint + spout), think (?), talk, surprised (!); the eyes glance at the chart highlight or the text.
-The owner asked about using Clawd (Anthropic's Claude Code mascot). We use our own whale instead, so the Page never looks affiliated with or endorsed by Anthropic.
+## Channel identity vs topic identity (owner brief, 2026-11-10)
+- **Channel identity is constant:** logo, royal blue #2F5BFF, sky blue #67C7F2, violet #A174F6 (shapes only; violet text #7A4FD6), white and pale blue-lavender backgrounds, dark navy text #161B3D, rounded cards, restrained gradients, clear Thai typography (Prompt + Noto Sans Thai).
+- **Topic identity changes per AI provider** (registry: `providers.json`):
+  - **Claude:** the owner-supplied Claude mascot (Clawd), terracotta #D97757 for shapes, mascot and large highlights (#B4522F for small text), warm cream #F5F3ED for supporting areas. These are working design colours, not official brand specs.
+  - **ChatGPT, Grok, Gemini:** own accents; **no mascot assigned yet**, so they use a labelled text badge and QC flags it. Never reuse Claude's mascot for them, and never invent an "approved" character.
+- **Mascot rules (Claude):** keep the terracotta colour, blocky 12×8 silhouette, two black square eyes, side extensions and four lower appendages; never recolour, smooth, humanise or 3D it. Composite the approved SVG poses (`providers/claude/poses/`) instead of regenerating it. The canonical pose is approved; prop variants (point, sparkle, think, hop, wave) are *proposed* until the owner approves them in Settings.
+- The owner chose to use the Claude mascot for Claude topics. Every Claude post carries "Balena Studio ไม่ได้มีส่วนเกี่ยวข้องกับ Anthropic" (cover and last slide) so it never reads as an official Anthropic post. The earlier pixel whale is retired.
 
 ## Visual identity (from the Page)
 - Light, airy background (white → pale lavender), soft glass cards, blue `#2F5BFF`→ purple `#7B4DFF` gradient accents (**colours estimated from the screenshot**; get the real hex values or logo files)

@@ -1,7 +1,7 @@
 // Status changes and the rules behind them (mirrors content-studio/workflow/publishing.md).
 import 'server-only';
 import { runQc, hasErrors } from './qc';
-import { exportIsFresh, getConfig, hashContent, writePost } from './store';
+import { exportIsFresh, getConfig, getManifest, getRegistry, hashContent, writePost } from './store';
 import { contentKey, type Post, type Status } from './schema';
 import { nowIso } from './time';
 
@@ -12,9 +12,9 @@ export class WorkflowError extends Error {}
 const log = (p: Post, event: string): Post => ({ ...p, history: [...p.history, { at: nowIso(), event }] });
 
 export async function applyAction(post: Post, action: Action, note = ''): Promise<Post> {
-  const config = await getConfig(post.brand);
+  const [config, registry, manifest] = await Promise.all([getConfig(post.brand), getRegistry(post.brand), getManifest(post.brand, post.id)]);
   const fresh = await exportIsFresh(post);
-  const issues = runQc(post, config, { exportFresh: fresh });
+  const issues = runQc(post, config, registry, { exportFresh: fresh, layoutIssues: manifest?.layoutIssues });
   const need = (allowed: Status[]) => {
     if (!allowed.includes(post.status)) throw new WorkflowError(`Can't ${action} a post that is "${post.status}".`);
   };

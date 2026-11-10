@@ -75,3 +75,11 @@ label { font-weight: 600; font-size: 13px; color: var(--muted); display: flex; f
   .thumbs { flex-direction: row; overflow-x: auto; }
   .cal { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+.pipeline { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.pstep { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; font-size: 12px; display: flex; flex-direction: column; gap: 3px; }
+.pstep.ok { border-color: #b9e5cc; background: #f3fbf6; }
+.kind { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 99px; white-space: nowrap; }
+.kind.auto { background: #e6ecff; color: #1f47c8; }
+.kind.bridge { background: #fff1d6; color: #8a5a00; }
+.kind.you { background: #fde6dd; color: #a2401e; }

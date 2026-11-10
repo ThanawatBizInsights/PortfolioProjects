@@ -1,34 +1,36 @@
 {
-  "at": "2026-11-10T05:54:16.292Z",
-  "contentHash": "7830c820b17c0867",
+  "at": "2026-11-10T07:01:09.212Z",
+  "contentHash": "a16c15a3c36125b1",
   "files": [
     {
-      "name": "slide-01.jpg",
-      "sha256": "b3f07239bb1c991cdcd9ff26c625638411ad17cc7e62f9f2a1e876e8c9941db5"
+      "name": "slide-01.png",
+      "sha256": "db05e118adcfb269ca0902fc6ff3c2b5d00feb425de017406537d422d427e05a"
     },
     {
-      "name": "slide-02.jpg",
-      "sha256": "f2c38a0014b31e9f92b1300158ff1f5ba919f2034f23c5c4188f7616f27fbff1"
+      "name": "slide-02.png",
+      "sha256": "9f73ae3f349d7bd95f7b41292083d7357de04d059e938ff3863763327a1f4c45"
     },
     {
-      "name": "slide-03.jpg",
-      "sha256": "e5b8d56d869d13acc9c8191292a46a2b0a8d103ee18f2eaaa86c312764a01a75"
+      "name": "slide-03.png",
+      "sha256": "1e7b78c7030d476dfeafdb6a00ba5ed69a7b1fa0b3d9c9f3ceeec5281eab10e6"
     },
     {
-      "name": "slide-04.jpg",
-      "sha256": "79d31a3ac53416315ab52fb12b6ce3ec4283f580673e92df3c001d6a280d2f6c"
+      "name": "slide-04.png",
+      "sha256": "ac5df6ca0de8006cbee63dbd4a9c716e583d472187bda9c5c8e0ad8a2eea1053"
     },
     {
-      "name": "slide-05.jpg",
-      "sha256": "7bcc54de44dbd458aa3d7064f11d91459625e12cdb5b9bd7370a569d77c2533a"
+      "name": "slide-05.png",
+      "sha256": "272b0e8d091a9eb0a7c85bd86bc1ed5cfde861962375d56793d3f1fdd7c4da2a"
     },
     {
-      "name": "slide-06.jpg",
-      "sha256": "2474cff4277d4b942b7b367297f4e71a078afaf24bf1ecd54b578d243471a752"
+      "name": "slide-06.png",
+      "sha256": "271398512acfe012a8cdd065b84ce08dc184206317d549ff4099919c629e00ec"
     },
     {
-      "name": "slide-07.jpg",
-      "sha256": "ee7963c6abceb8ec68c1a7848a538839442c18f670c50df025839eea49efb4da"
+      "name": "slide-07.png",
+      "sha256": "1388641b0e7ea7395e459158fa1b039b542f92912799eb46503fa026c531d3a1"
     }
-  ]
+  ],
+  "zip": "2026-11-17-claude-api-model-prices.zip",
+  "layoutIssues": []
 }

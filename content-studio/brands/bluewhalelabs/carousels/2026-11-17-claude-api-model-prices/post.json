@@ -31,9 +31,9 @@
       "imagePrompt": "A cute glossy 3D balance scale weighing a tiny glowing cube against a large glowing cube, a few floating coins, soft studio lighting, lots of empty space at the top",
       "image": "",
       "mascot": {
-        "mood": "happy",
-        "say": "",
-        "look": "auto"
+        "pose": "default",
+        "placement": "corner",
+        "say": ""
       }
     },
     {
@@ -74,9 +74,9 @@
       "imagePrompt": "",
       "image": "",
       "mascot": {
-        "mood": "surprised",
-        "say": "ถูกกว่ากัน 80 เท่าเลยครับ",
-        "look": "auto"
+        "pose": "default",
+        "placement": "right",
+        "say": "ถูกกว่ากัน 80 เท่าเลยครับ"
       }
     },
     {
@@ -103,9 +103,9 @@
       "imagePrompt": "",
       "image": "",
       "mascot": {
-        "mood": "think",
-        "say": "สองอย่างนี้แยกกันนะครับ",
-        "look": "auto"
+        "pose": "default",
+        "placement": "right",
+        "say": "สองอย่างนี้แยกกันนะครับ"
       }
     },
     {
@@ -121,9 +121,9 @@
       "imagePrompt": "",
       "image": "",
       "mascot": {
-        "mood": "talk",
-        "say": "ลองเทียบดูได้เลยครับ",
-        "look": "auto"
+        "pose": "default",
+        "placement": "right",
+        "say": "ลองเทียบดูได้เลยครับ"
       }
     }
   ],
@@ -153,8 +153,13 @@
     {
       "at": "2026-11-10T10:00:00.000Z",
       "event": "created (claude-code sample, chart demo)"
+    },
+    {
+      "at": "2026-11-10T12:00:00.000Z",
+      "event": "migrated: provider=claude, whale mascot replaced by the Claude mascot (default pose)"
     }
   ],
   "createdAt": "2026-11-10T10:00:00.000Z",
-  "updatedAt": "2026-11-10T10:00:00.000Z"
+  "updatedAt": "2026-11-10T10:00:00.000Z",
+  "provider": "claude"
 }

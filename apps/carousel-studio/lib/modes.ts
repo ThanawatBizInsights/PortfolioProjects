@@ -35,7 +35,7 @@ export function imageModes(): ModeInfo[] {
       id: 'manual',
       label: 'Manual (ChatGPT / Grok / Seedream)',
       available: true,
-      note: 'Copy each slide’s image prompt, generate the picture in ChatGPT or Fuzion, then upload it here.',
+      note: 'Manual bridge: copy the illustration prompt (with brand style and mascot rules), generate it in ChatGPT, Grok or Fuzion yourself, then upload it to its slide. The app cannot use your ChatGPT subscription’s image generator; there is no supported integration.',
     },
     {
       id: 'api',

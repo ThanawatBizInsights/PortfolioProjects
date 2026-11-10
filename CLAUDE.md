@@ -60,6 +60,6 @@ python3 content-studio/scripts/publish_log.py record --help
 ## Drafting queued carousels (when asked to "draft the queued carousels")
 
 1. Read `content-studio/brands/<brand>/carousel-queue.json` and take the items with `status: "queued"`.
-2. For each one, follow the brief in `apps/carousel-studio/lib/claudePrompt.ts` (same rules: official sources with URLs, no text in image prompts, slide limits, brand voice from `carousel.config.json` and `brand-brief.md`).
+2. For each one, follow the brief in `apps/carousel-studio/lib/claudePrompt.ts`: primary sources with URLs and check dates, a per-slide storyboard (`story`), only approved assets from `providers.json` for the post's provider, no text or mascots in image prompts, and the brand voice from `carousel.config.json` and `brand-brief.md`.
 3. Write `content-studio/brands/<brand>/carousels/<YYYY-MM-DD>-<slug>/post.json` that validates against `PostSchema` in `apps/carousel-studio/lib/schema.ts`, with `status: "draft"` and `generation.mode: "claude-code"`.
 4. Set the queue item to `status: "drafted"` with `postId`. Never approve, schedule or publish; the owner does that in the app.

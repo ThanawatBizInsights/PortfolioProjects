@@ -7,7 +7,7 @@ import 'server-only';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { ConfigSchema, PostSchema, contentKey, type Config, type Post } from './schema';
+import { ConfigSchema, PostSchema, RegistrySchema, contentKey, type Config, type Post, type Registry } from './schema';
 import { nowIso } from './time';
 
 export const CONTENT_ROOT = path.resolve(process.env.CONTENT_ROOT ?? path.join(process.cwd(), '../../content-studio'));
@@ -58,6 +58,29 @@ export async function saveConfig(config: Config): Promise<Config> {
   const parsed = ConfigSchema.parse(config);
   await fs.writeFile(path.join(brandDir(parsed.brand), 'carousel.config.json'), JSON.stringify(parsed, null, 2) + '\n');
   return parsed;
+}
+
+// ---------- Provider registry + brand assets ----------
+export async function getRegistry(brand: string): Promise<Registry> {
+  try {
+    return RegistrySchema.parse(JSON.parse(await fs.readFile(path.join(brandDir(brand), 'providers.json'), 'utf8')));
+  } catch {
+    return { note: '', providers: [] };
+  }
+}
+
+export async function saveRegistry(brand: string, reg: Registry): Promise<Registry> {
+  const parsed = RegistrySchema.parse(reg);
+  await fs.writeFile(path.join(brandDir(brand), 'providers.json'), JSON.stringify(parsed, null, 2) + '\n');
+  return parsed;
+}
+
+/** Resolve a brand asset (logo, mascot poses) without escaping the brand folder. */
+export function brandAsset(brand: string, rel: string): string {
+  const base = brandDir(brand);
+  const full = path.resolve(base, rel);
+  if (!full.startsWith(base + path.sep) || !/\.(png|svg|webp|jpg|jpeg)$/i.test(full)) throw new Error('Bad asset path');
+  return full;
 }
 
 export async function listPosts(brand: string): Promise<Post[]> {
@@ -115,7 +138,7 @@ export function hashContent(post: Post): string {
 }
 
 // ---------- Export manifest ----------
-export type Manifest = { at: string; contentHash: string; files: { name: string; sha256: string }[] };
+export type Manifest = { at: string; contentHash: string; files: { name: string; sha256: string }[]; zip?: string; layoutIssues?: { slide: number; message: string }[] };
 
 export async function getManifest(brand: string, id: string): Promise<Manifest | null> {
   try {

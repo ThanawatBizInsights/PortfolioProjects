@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-10T07:00:58.225Z",
+  "contentHash": "22d4f2a34f219699",
+  "files": [
+    {
+      "name": "slide-01.png",
+      "sha256": "cb5ba58c4a1a6e05bf2a45083febd20e081af8d8d6fd00f79c61907fe9f8c838"
+    },
+    {
+      "name": "slide-02.png",
+      "sha256": "da51e340abb1ce2ea145dd7b465dc271317b2600f15269a7528d387208986eb3"
+    },
+    {
+      "name": "slide-03.png",
+      "sha256": "af776c792f645512c542a18582f1590409294eb4ffb8d492d7bcde34a738605d"
+    },
+    {
+      "name": "slide-04.png",
+      "sha256": "0099fe10ff82cf8fcb7d36023626672e533f7b3363ad53651651ec8b2d71e4c5"
+    },
+    {
+      "name": "slide-05.png",
+      "sha256": "3654f66abd0587277eeffd5daac35dd3a054063550a9d42c85b1fe5de677ab6a"
+    },
+    {
+      "name": "slide-06.png",
+      "sha256": "512cb78dcc35e7e941e84073a42a22c305f3f87b020c83b29a1bf11400380d89"
+    },
+    {
+      "name": "slide-07.png",
+      "sha256": "a37d3fc7725f0c037d57d2a4ca50d613b5b5fd3d5210182ad3de21917ae132dd"
+    }
+  ],
+  "zip": "2026-11-24-claude-beginner-tutorial.zip",
+  "layoutIssues": []
+}

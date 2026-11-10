@@ -39,7 +39,7 @@ function parseCsv(text: string): Row[] {
 const bkkNow = () => new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 16).replace('T', ' ');
 
 async function fingerprints(post: Post, platform: 'instagram' | 'facebook') {
-  const cover = await fs.readFile(postFile(post.brand, post.id, 'export', 'slide-01.jpg')).catch(() => null);
+  const cover = await fs.readFile(postFile(post.brand, post.id, 'export', 'slide-01.png')).catch(() => null);
   return { media: cover ? sha(cover) : '', caption: sha(post.captions[platform].trim()) };
 }
 
@@ -68,7 +68,7 @@ export async function appendLog(
     platform,
     account: entry.account ?? '',
     package: post.id,
-    media_file: 'export/slide-01.jpg',
+    media_file: 'export/slide-01.png',
     media_sha256: f.media,
     caption_sha256: f.caption,
     scheduled_for_bkk: post.scheduledAt,

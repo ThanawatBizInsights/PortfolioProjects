@@ -1,42 +1,44 @@
 {
-  "at": "2026-11-10T05:54:11.836Z",
-  "contentHash": "960b8853698c9885",
+  "at": "2026-11-10T07:01:04.379Z",
+  "contentHash": "b303927f10854c61",
   "files": [
     {
-      "name": "slide-01.jpg",
-      "sha256": "307181cfd726980a212f6e3c74bd9e6fda414fde86ad4301daa63a0860dd785d"
+      "name": "slide-01.png",
+      "sha256": "979af9688c63a1b457dd1cfb4d01feb420c4f49798e4577415096fc1fc0bba0e"
     },
     {
-      "name": "slide-02.jpg",
-      "sha256": "5ab30dfac68eae6e2c2ee67950aee8d201a6638d7a4da4dab80108b5c97719db"
+      "name": "slide-02.png",
+      "sha256": "4e8d3633261e25a9252f01172af3c6f02455573e6c8d2e306b7d38de9c068acd"
     },
     {
-      "name": "slide-03.jpg",
-      "sha256": "feef96e5f6a21cef3e125b58bd48c559dac2193ec9c44f15f2abb7b319ab85c4"
+      "name": "slide-03.png",
+      "sha256": "a68e5b8e94d6feb24f1fefd69e545f85070f18dee152fb70e9ffb8c40578df0f"
     },
     {
-      "name": "slide-04.jpg",
-      "sha256": "f082391241a5cd6ae0310530faa3b7b7ec2e1a21a3cf266efe7d03134266b2a7"
+      "name": "slide-04.png",
+      "sha256": "95e58e2da4b4a2714e99fbb8861da0f6fb1724adcc8a1fd70de54d2a06b4a63b"
     },
     {
-      "name": "slide-05.jpg",
-      "sha256": "6cd35f1bdeb6ce9e3e9f3afe6d7e2f868023b43b1f0dbfe5e2a33a4c75bdb055"
+      "name": "slide-05.png",
+      "sha256": "4f33de492bca94e7c62e14e96c73777a6e7a2ef83fcaf1b6e84ba9eef8ab76fc"
     },
     {
-      "name": "slide-06.jpg",
-      "sha256": "89044c6c5518f140a8e9619b77af60fff6c718ce50ff1613d67cf1720c19edd5"
+      "name": "slide-06.png",
+      "sha256": "797bda6f10a2a5bd636ad2e858144fcee3b5345f8962fb8f3e20f93e6317b774"
     },
     {
-      "name": "slide-07.jpg",
-      "sha256": "7735f13a4a7d743f2ee18bbf13abd0433806e3b6f6f022a0e839f8b69df6925b"
+      "name": "slide-07.png",
+      "sha256": "930f0da6ac0a2946facc2e9fbec6a762106f469a286bbb789c36b90e37eed0a7"
     },
     {
-      "name": "slide-08.jpg",
-      "sha256": "c07513afdbb9a80283eb793720232b59b10ed99c63228dc67f7acf69fc4dff25"
+      "name": "slide-08.png",
+      "sha256": "fef971773402ad814bb28447152d6a3cf9e6037af03aeb4b58ae3677a5bdf5ec"
     },
     {
-      "name": "slide-09.jpg",
-      "sha256": "d3023f8b5385e3a38886ab8ae7bd054aee5253e4344144ace7d19a41c1f9197e"
+      "name": "slide-09.png",
+      "sha256": "b58c900b8d1129fbe3c4b74ec15d282f8c30565eb1da4062a89296c309ebf8ae"
     }
-  ]
+  ],
+  "zip": "2026-11-19-claude-prompt-5-techniques.zip",
+  "layoutIssues": []
 }

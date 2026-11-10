@@ -1,19 +1,18 @@
 import Link from 'next/link';
-import { DEFAULT_BRAND, getConfig, getQueue, listPosts } from '@/lib/store';
+import { DEFAULT_BRAND, getConfig, getQueue, getRegistry, listPosts } from '@/lib/store';
 import { STATUSES } from '@/lib/schema';
 import { bkkDate, formatBkk, isoToBkkInput, upcomingBkkDays } from '@/lib/time';
 import { ScaledSlide } from '@/components/SlideView';
-import { WelcomeMascot } from '@/components/WelcomeMascot';
+import { assetUrl } from '@/components/SlideView';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Dashboard({ searchParams }: { searchParams: Promise<{ brand?: string }> }) {
   const brand = (await searchParams).brand ?? DEFAULT_BRAND;
-  const [config, posts, queue] = await Promise.all([getConfig(brand), listPosts(brand), getQueue(brand)]);
+  const [config, posts, queue, registry] = await Promise.all([getConfig(brand), listPosts(brand), getQueue(brand), getRegistry(brand)]);
   const days = upcomingBkkDays(14);
   const freeSlots = days.reduce((n, d) => n + config.slots.filter((s) => s.day === d.day && !posts.some((p) => p.scheduledAt && bkkDate(p.scheduledAt) === d.date && isoToBkkInput(p.scheduledAt).slice(11) === s.time)).length, 0);
   const toReview = posts.filter((p) => p.status === 'ready-for-review').length;
-  const greeting = `สวัสดีครับ ยินดีต้อนรับสู่ Balena Studio · 14 วันข้างหน้ามีช่องว่าง ${freeSlots} ช่อง · รอรีวิว ${toReview} โพสต์`;
 
   return (
     <div className="col" style={{ gap: 22 }}>
@@ -28,7 +27,13 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
         <Link className="btn primary" href="/posts/new">+ New carousel</Link>
       </div>
 
-      <WelcomeMascot enabled={config.mascot.enabled} name={config.mascot.name} say={greeting} colors={{ body: config.mascot.body, belly: config.mascot.belly, ink: config.colors.ink }} />
+      <div className="card row" style={{ gap: 20 }}>
+        {config.logo ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={assetUrl(brand, config.logo.file)} alt={config.displayName} style={{ height: 44 }} />
+        ) : null}
+        <span className="muted">Next 14 days: <b>{freeSlots}</b> free slot(s) · <b>{toReview}</b> waiting for review · providers: {registry.providers.map((p) => `${p.name}${p.mascot ? '' : ' (no mascot)'}`).join(', ')}</span>
+      </div>
 
       <section>
         <h2>Next 14 days</h2>
@@ -65,7 +70,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
             .sort((a, b) => STATUSES.indexOf(a.status) - STATUSES.indexOf(b.status))
             .map((p) => (
               <Link key={p.id} href={`/posts/${p.id}`} className="card row" style={{ alignItems: 'flex-start', color: 'inherit' }}>
-                {p.slides[0] ? <ScaledSlide slide={p.slides[0]} index={0} post={p} config={config} scale={0.08} /> : null}
+                {p.slides[0] ? <ScaledSlide slide={p.slides[0]} index={0} post={p} config={config} registry={registry} scale={0.08} /> : null}
                 <div className="col" style={{ gap: 4, minWidth: 0 }}>
                   <span className={`badge s-${p.status}`} style={{ alignSelf: 'flex-start' }}>{p.status}</span>
                   <b style={{ fontFamily: 'Heading' }}>{p.title}</b>

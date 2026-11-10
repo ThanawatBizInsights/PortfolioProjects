@@ -1,0 +1,138 @@
+{
+  "note": "Working colours chosen for Balena Studio layouts, not official brand specifications of any company. Text colours meet WCAG contrast on the slide backgrounds.",
+  "providers": [
+    {
+      "id": "claude",
+      "name": "Claude",
+      "maker": "Anthropic",
+      "accent": "#D97757",
+      "accentText": "#B4522F",
+      "accentSoft": "#F5F3ED",
+      "accentSoft2": "#FBE9E2",
+      "mascot": {
+        "name": "Claude mascot (Clawd)",
+        "reference": "providers/claude/reference.png",
+        "sourceNote": "Extracted from the owner-supplied 'Claude Mascot.png' (welcome text and background removed).",
+        "poses": [
+          {
+            "id": "default",
+            "file": "providers/claude/poses/default.svg",
+            "status": "approved",
+            "note": "Canonical sprite, rebuilt 1:1 from the reference (12×8 grid, colours sampled).",
+            "aspect": 1.486
+          },
+          {
+            "id": "point-right",
+            "file": "providers/claude/poses/point-right.svg",
+            "status": "proposed",
+            "note": "Canonical sprite + a pixel arrow pointing right.",
+            "aspect": 2.295
+          },
+          {
+            "id": "point-left",
+            "file": "providers/claude/poses/point-left.svg",
+            "status": "proposed",
+            "note": "Canonical sprite + a pixel arrow pointing left.",
+            "aspect": 2.295
+          },
+          {
+            "id": "sparkle",
+            "file": "providers/claude/poses/sparkle.svg",
+            "status": "proposed",
+            "note": "Canonical sprite + two pixel sparkles (celebrate / tip).",
+            "aspect": 1.553
+          },
+          {
+            "id": "think",
+            "file": "providers/claude/poses/think.svg",
+            "status": "proposed",
+            "note": "Canonical sprite + a pixel question mark (think / question).",
+            "aspect": 1.559
+          },
+          {
+            "id": "hop",
+            "file": "providers/claude/poses/hop.svg",
+            "status": "proposed",
+            "note": "Canonical sprite lifted with a ground shadow (excited / jump).",
+            "aspect": 1.167
+          },
+          {
+            "id": "wave",
+            "file": "providers/claude/poses/wave.svg",
+            "status": "proposed",
+            "note": "Right side extension raised one row. Changes the silhouette slightly, so approve only if it still reads as the mascot.",
+            "aspect": 1.486
+          }
+        ]
+      },
+      "logos": [],
+      "rules": [
+        "Keep the terracotta colour (#DA7758 as sampled), blocky 12×8 pixel silhouette, two black square eyes, side extensions and four lower appendages.",
+        "Never recolour it blue or violet, smooth it, add a human face or make it 3D.",
+        "Composite the approved SVG poses; do not ask image models to redraw it.",
+        "Show it as a guide: introducing, pointing, reacting or presenting a tip."
+      ],
+      "disclaimer": "Balena Studio ไม่ได้มีส่วนเกี่ยวข้องกับ Anthropic"
+    },
+    {
+      "id": "chatgpt",
+      "name": "ChatGPT",
+      "maker": "OpenAI",
+      "accent": "#10A37F",
+      "accentText": "#0B7A5F",
+      "accentSoft": "#EAF6F1",
+      "accentSoft2": "#D7EFE6",
+      "mascot": null,
+      "logos": [],
+      "rules": [
+        "No mascot assigned yet: use the text treatment and flag it."
+      ],
+      "disclaimer": "Balena Studio ไม่ได้มีส่วนเกี่ยวข้องกับ OpenAI"
+    },
+    {
+      "id": "grok",
+      "name": "Grok",
+      "maker": "xAI",
+      "accent": "#2B2F36",
+      "accentText": "#2B2F36",
+      "accentSoft": "#EEEFF2",
+      "accentSoft2": "#DFE1E6",
+      "mascot": null,
+      "logos": [],
+      "rules": [
+        "No mascot assigned yet: use the text treatment and flag it."
+      ],
+      "disclaimer": "Balena Studio ไม่ได้มีส่วนเกี่ยวข้องกับ xAI"
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini",
+      "maker": "Google",
+      "accent": "#4C8DF6",
+      "accentText": "#2563C9",
+      "accentSoft": "#EAF2FE",
+      "accentSoft2": "#D6E6FD",
+      "mascot": null,
+      "logos": [],
+      "rules": [
+        "No mascot assigned yet: use the text treatment and flag it."
+      ],
+      "disclaimer": "Balena Studio ไม่ได้มีส่วนเกี่ยวข้องกับ Google"
+    },
+    {
+      "id": "general",
+      "name": "AI ทั่วไป",
+      "maker": "",
+      "accent": "#2F5BFF",
+      "accentText": "#2F5BFF",
+      "accentSoft": "#EEF1FF",
+      "accentSoft2": "#DFE5FF",
+      "mascot": null,
+      "logos": [],
+      "rules": [
+        "Channel-only topics: Balena Studio branding, no topic mascot."
+      ],
+      "disclaimer": ""
+    }
+  ]
+}

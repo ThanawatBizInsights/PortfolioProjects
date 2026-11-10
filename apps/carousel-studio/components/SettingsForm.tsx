@@ -1,12 +1,13 @@
 'use client';
 import { useState } from 'react';
-import type { Config } from '@/lib/schema';
+import type { Config, Registry } from '@/lib/schema';
+import { MascotArt } from './SlideView';
 import type { ModeInfo } from '@/lib/modes';
 import { DAYS } from '@/lib/time';
 
 type Modes = { generation: ModeInfo[]; images: ModeInfo[]; publishing: ModeInfo[] };
 
-export function SettingsForm({ initial, modes }: { initial: Config; modes: Modes }) {
+export function SettingsForm({ initial, modes, registry }: { initial: Config; modes: Modes; registry: Registry }) {
   const [c, setC] = useState(initial);
   const [msg, setMsg] = useState<{ kind: 'ok' | 'error'; text: string } | null>(null);
   const set = (patch: Partial<Config>) => setC({ ...c, ...patch });
@@ -60,18 +61,7 @@ export function SettingsForm({ initial, modes }: { initial: Config; modes: Modes
         </div>
       </div>
 
-      <div className="card col">
-        <h2>Mascot</h2>
-        <label style={{ flexDirection: 'row', alignItems: 'center', gap: 8, fontWeight: 400 }}>
-          <input type="checkbox" style={{ width: 'auto' }} checked={c.mascot.enabled} onChange={(e) => set({ mascot: { ...c.mascot, enabled: e.target.checked } })} />
-          Use the pixel whale mascot on slides and in the app
-        </label>
-        <div className="row">
-          <label style={{ flex: 1 }}>Name<input value={c.mascot.name} onChange={(e) => set({ mascot: { ...c.mascot, name: e.target.value } })} /></label>
-          <label style={{ width: 120 }}>Body<input type="color" value={c.mascot.body} onChange={(e) => set({ mascot: { ...c.mascot, body: e.target.value } })} style={{ height: 38, padding: 2 }} /></label>
-          <label style={{ width: 120 }}>Belly<input type="color" value={c.mascot.belly} onChange={(e) => set({ mascot: { ...c.mascot, belly: e.target.value } })} style={{ height: 38, padding: 2 }} /></label>
-        </div>
-      </div>
+      <ProvidersPanel brand={c.brand} initial={registry} />
 
       <div className="card col">
         <h2>Posting slots (Asia/Bangkok)</h2>
@@ -100,6 +90,54 @@ export function SettingsForm({ initial, modes }: { initial: Config; modes: Modes
         <button className="btn primary" onClick={save}>Save settings</button>
         {msg ? <span className={msg.kind === 'error' ? 'issue error' : 'ok-box'}>{msg.text}</span> : null}
       </div>
+    </div>
+  );
+}
+
+function ProvidersPanel({ brand, initial }: { brand: string; initial: Registry }) {
+  const [reg, setReg] = useState(initial);
+  const [err, setErr] = useState('');
+  async function setStatus(provider: string, pose: string, status: 'approved' | 'proposed') {
+    setErr('');
+    const r = await fetch(`/api/providers?brand=${brand}`, { method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ provider, pose, status }) });
+    const d = await r.json();
+    if (!r.ok) setErr(d.error); else setReg(d);
+  }
+  return (
+    <div className="card col">
+      <h2>Providers (topic identity)</h2>
+      <p className="small muted" style={{ margin: 0 }}>Each AI topic has its own accent colours and mascot. The Balena Studio logo and design system stay the same. Slides pick assets from the post’s provider automatically. {reg.note}</p>
+      {err ? <div className="issue error">{err}</div> : null}
+      {reg.providers.map((p) => (
+        <div key={p.id} className="card col" style={{ padding: 12 }}>
+          <div className="row">
+            <b style={{ fontFamily: 'Heading' }}>{p.name}</b>
+            <span className="muted small">{p.maker}</span>
+            {[p.accent, p.accentText, p.accentSoft, p.accentSoft2].map((col) => <span key={col} title={col} style={{ width: 22, height: 22, borderRadius: 6, background: col, border: '1px solid #ddd' }} />)}
+          </div>
+          {p.mascot ? (
+            <>
+              <div className="small muted">{p.mascot.name} · {p.mascot.sourceNote}</div>
+              <div className="row" style={{ alignItems: 'stretch' }}>
+                {p.mascot.poses.map((ps) => (
+                  <div key={ps.id} className="card col" style={{ padding: 8, alignItems: 'center', gap: 4, width: 150 }}>
+                    <MascotArt brand={brand} provider={p} pose={ps.id} height={56} />
+                    <b className="small">{ps.id}</b>
+                    <span className={`badge ${ps.status === 'approved' ? 's-published' : 's-ready-for-review'}`}>{ps.status}</span>
+                    <span className="small muted" style={{ textAlign: 'center' }}>{ps.note}</span>
+                    {ps.id !== 'default' ? (
+                      <button className="btn sm" onClick={() => setStatus(p.id, ps.id, ps.status === 'approved' ? 'proposed' : 'approved')}>{ps.status === 'approved' ? 'Unapprove' : 'Approve'}</button>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="issue warn">No mascot assigned. Slides show a labelled “{p.name}” text badge and QC flags it. Add an approved asset to <code>providers/{p.id}/</code> and <code>providers.json</code>.</div>
+          )}
+          <ul className="small muted" style={{ margin: 0, paddingLeft: 18 }}>{p.rules.map((r, i) => <li key={i}>{r}</li>)}</ul>
+        </div>
+      ))}
     </div>
   );
 }

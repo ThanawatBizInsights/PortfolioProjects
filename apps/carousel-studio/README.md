@@ -49,13 +49,30 @@ Posts are stored as plain files in `content-studio/brands/<brand>/carousels/<id>
 
 Automated modes show as "later" and can't be switched on from the UI until they're built and their requirements are met. Automatic publishing stays **off** until `content-studio/brands/<brand>/automation.md` is approved.
 
+## Pipeline: what's automatic today
+
+Topic → research → fact check → Thai copy → storyboard → asset selection → rendering → QC → export → (publish)
+
+| Step | Who does it now | Automatic? |
+|---|---|---|
+| Research, fact check, Thai copy, storyboard | Claude, via the copy/paste brief (Claude chat on your plan) or a Claude Code run | **Manual bridge.** You paste the brief and the answer, then review and edit. No API key is configured. |
+| Asset selection (logo, provider colours, mascot pose) | App, from `providers.json` | **Automatic** |
+| Illustrations (optional) | You, in ChatGPT / Grok / Fuzion, using "Copy illustration prompt + brand style + mascot rules" | **Manual bridge.** The app cannot call your ChatGPT subscription's image generator. |
+| Rendering (PNG per slide), layout overflow detection | App (headless Chromium) | **Automatic** |
+| QC (structure, spelling patterns, contrast, layouts, mascots, sources, unsupported numbers) | App + your read of facts and tone | **Automatic checks** + human review |
+| Export: ordered ZIP (PNGs, captions, alt text, sources.md, storyboard.md) | App | **Automatic** |
+| Publishing | You, with the posting kit (Meta API not connected) | Manual; review-before-publish by default |
+
+## Provider registry
+`content-studio/brands/<brand>/providers.json`: per AI provider, its accents (with contrast-safe text colour), approved mascot poses (SVG files), logos and identity rules. Posts pick assets from their `provider`; comparison posts can set `provider` per slide. Missing mascots show a labelled text badge and are flagged in QC. Approve or unapprove poses in **Settings → Providers**.
+
 ## Code map
 - `lib/schema.ts`: post, slide and brand-config shapes (zod)
 - `lib/store.ts`: file storage (swap for Supabase later); `lib/workflow.ts`: status rules
 - `lib/qc.ts`: quality checks (shared by the browser and the server)
 - `lib/claudePrompt.ts`: the brief Claude follows; `lib/exporter.ts`: JPEG export via headless Chromium
 - `lib/publishLog.ts`: duplicate check + publishing log; `lib/modes.ts`: manual and automated mode availability
-- `components/SlideView.tsx`: the slide templates (cover, statement, step, prompt, summary)
+- `components/SlideView.tsx`: the Balena Studio design system and layouts (cover, concept, flow, example, howto, compare, recap, chart + simple legacy layouts); mascots are composited from the registry
 
 ## Not built yet
 - No login. Run it locally or privately; add Supabase Auth before putting it online.

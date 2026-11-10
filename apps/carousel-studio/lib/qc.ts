@@ -1,133 +1,166 @@
-// Quality checks that run in the browser (live) and on the server (before status changes).
+// Quality checks shared by the browser (live) and the server (status changes).
 // "error" blocks review/approval; "warn" is shown but doesn't block.
-import type { Config, Post, Slide } from './schema';
+import type { Config, Post, Registry, Slide } from './schema';
+import { findProvider, slideProvider } from './schema';
+import { contrast } from './color';
 import { bkkHour } from './time';
 
 export type Issue = { level: 'error' | 'warn'; slide?: number; message: string };
 
 const STOCK_PHRASES = ['ในยุคดิจิทัล', 'พลิกโฉม', 'ยกระดับ', 'ห้ามพลาด', 'ตัวช่วยชั้นดี', 'ไม่ควรพลาด', 'ที่สุดแห่งปี'];
-
-// Limits sized for 1080x1350 slides at the template's font sizes.
-const LIMITS = {
-  coverLine: 16,
-  coverLines: 3,
-  title: 34,
-  body: 140,
-  prompt: 420,
-  bullets: 5,
-  bullet: 60,
+// Common misspellings → Royal Institute spelling
+const SPELLING: Record<string, string> = {
+  'อัพเดท': 'อัปเดต', 'อัพเดต': 'อัปเดต', 'แอพ': 'แอป', 'เว็ป': 'เว็บ', 'คอมเม้นท์': 'คอมเมนต์', 'คอมเม้น': 'คอมเมนต์', 'อีเมล์': 'อีเมล',
+  'ล็อคอิน': 'ล็อกอิน', 'คลิ๊ก': 'คลิก', 'ซอฟท์แวร์': 'ซอฟต์แวร์', 'ซอฟแวร์': 'ซอฟต์แวร์', 'กราฟฟิก': 'กราฟิก', 'โปรแกรมเมอ': 'โปรแกรมเมอร์', 'เทคโนโลยี่': 'เทคโนโลยี',
 };
+const CLAIM_PATTERN = /(\d[\d,.]*\s*(%|เปอร์เซ็นต์|เท่า|บาท|ล้าน|พันล้าน))|[$฿€]\s?\d/;
 
-const len = (s: string) => [...s.replace(/\*\*/g, '')].length; // count characters, ignoring highlight markers
+const len = (s: string) => [...s.replace(/\*\*/g, '')].length;
 
-function slideText(s: Slide): string {
+export function slideTexts(s: Slide): string[] {
+  const m = s.mascot?.say ? [s.mascot.say] : [];
   switch (s.type) {
-    case 'cover':
-      return [s.kicker, s.title, s.subtitle].join(' ');
-    case 'statement':
-    case 'step':
-      return [s.title, s.body].join(' ');
-    case 'prompt':
-      return [s.title, s.prompt, s.note].join(' ');
-    case 'summary':
-      return [s.title, ...s.bullets, s.cta].join(' ');
-    case 'chart':
-      return [s.title, s.subtitle, s.note, ...s.data.map((d) => d.label)].join(' ');
+    case 'cover': return [s.kicker, s.title, s.subtitle, s.chat.user, s.chat.reply, ...m];
+    case 'concept': return [s.title, s.definition, ...s.points.flatMap((p) => [p.label, p.text]), ...m];
+    case 'flow': return [s.title, s.intro, ...s.steps.flatMap((p) => [p.label, p.text]), ...m];
+    case 'example': return [s.title, s.prompt, ...s.annotations.flatMap((a) => [a.label, a.text]), ...s.reply, s.replyNote, ...m];
+    case 'howto': return [s.title, ...s.items.flatMap((p) => [p.ui, p.label, p.text]), ...m];
+    case 'compare': return [s.title, ...s.columns, ...s.rows.flatMap((r) => [r.label, ...r.cells]), ...m];
+    case 'recap': return [s.title, ...s.items, s.cta, ...m];
+    case 'chart': return [s.title, s.subtitle, s.note, ...s.data.map((d) => d.label), ...m];
+    case 'statement': case 'step': return [s.title, s.body, ...m];
+    case 'prompt': return [s.title, s.prompt, s.note, ...m];
+    case 'summary': return [s.title, ...s.bullets, s.cta, ...m];
   }
 }
 
-export function runQc(post: Post, config: Config, opts: { exportFresh?: boolean } = {}): Issue[] {
+export function runQc(post: Post, config: Config, registry: Registry, opts: { exportFresh?: boolean; layoutIssues?: { slide: number; message: string }[] } = {}): Issue[] {
   const issues: Issue[] = [];
   const add = (level: Issue['level'], message: string, slide?: number) => issues.push({ level, message, slide });
-
-  // Structure
   const n = post.slides.length;
+  const allowedProviders = new Set([post.provider, ...post.providers]);
+
+  // ---- structure ----
   if (n < 3) add('error', `Only ${n} slide(s). A carousel needs at least 3.`);
   if (n > 10) add('error', `${n} slides. The Instagram API allows at most 10.`);
   if (n && post.slides[0].type !== 'cover') add('warn', 'The first slide should be a cover.', 1);
-  if (n && post.slides[n - 1].type !== 'summary') add('warn', 'The last slide should be a summary with one CTA.', n);
+  if (post.inputs.slideCount && n !== post.inputs.slideCount) add('warn', `Planned ${post.inputs.slideCount} slides, but there are ${n}.`);
+  if (!findProvider(registry, post.provider)) add('error', `Provider "${post.provider}" is not in the provider registry.`);
 
-  // Per-slide text
+  // ---- repeated layouts ----
+  for (let i = 2; i < n; i++) {
+    const t = post.slides[i].type;
+    if (t === post.slides[i - 1].type && t === post.slides[i - 2].type) add('warn', `Slides ${i - 1}–${i + 1} all use the "${t}" layout. Vary the visual (diagram, example, table…).`, i + 1);
+  }
+
   post.slides.forEach((s, i) => {
     const no = i + 1;
+    const texts = slideTexts(s).filter(Boolean);
+    const all = texts.join(' ');
+
+    // ---- copy length ----
+    if (!s.title.trim()) add('error', 'The headline is empty.', no);
     if (s.type === 'cover') {
-      const lines = s.title.split('\n');
-      if (!s.title.trim()) add('error', 'The cover title is empty.', no);
-      if (lines.length > LIMITS.coverLines) add('warn', `The cover title has ${lines.length} lines; ${LIMITS.coverLines} or fewer reads better.`, no);
-      lines.forEach((l) => {
-        if (len(l) > LIMITS.coverLine) add('warn', `The cover line "${l}" is ${len(l)} characters. Keep each line to ${LIMITS.coverLine} or fewer and break it with a new line.`, no);
-      });
-    } else {
-      if (!s.title.trim()) add('error', 'The slide title is empty.', no);
-      if (len(s.title) > LIMITS.title) add('warn', `The title is ${len(s.title)} characters (aim for ${LIMITS.title} or fewer).`, no);
-    }
-    if ((s.type === 'statement' || s.type === 'step') && len(s.body) > LIMITS.body)
-      add('warn', `The body is ${len(s.body)} characters (aim for ${LIMITS.body} or fewer). Split it into two slides?`, no);
-    if (s.type === 'prompt' && len(s.prompt) > LIMITS.prompt) add('warn', `The prompt box is ${len(s.prompt)} characters, which may be too small to read.`, no);
-    if (s.type === 'summary') {
-      if (s.bullets.length > LIMITS.bullets) add('warn', `${s.bullets.length} bullets; keep it to ${LIMITS.bullets} or fewer.`, no);
-      s.bullets.forEach((b) => len(b) > LIMITS.bullet && add('warn', `The bullet "${b.slice(0, 20)}…" is long.`, no));
-      if (!s.cta.trim()) add('warn', 'The last slide has no CTA.', no);
-      if (s.mascot && len(s.cta) > 24) add('warn', `With the mascot beside it, the CTA has room for about 24 characters (now ${len(s.cta)}).`, no);
-    }
+      s.title.split('\n').forEach((l) => len(l) > 16 && add('warn', `The cover line "${l}" is ${len(l)} characters (aim for ≤ 16 per line).`, no));
+      if (s.title.split('\n').length > 3) add('warn', 'The cover title has more than 3 lines.', no);
+    } else if (s.title.split('\n').some((l) => len(l) > 30)) add('warn', 'The headline has a line over 30 characters; add a line break or shorten it.', no);
+
+    // ---- teaches visually? ----
+    if (s.type === 'statement' && !s.image && !s.imagePrompt && len(s.body) < 60) add('warn', 'A sentence above an empty card. Use a diagram, example or comparison layout, or add an illustration.', no);
+    if (s.type === 'concept' && s.points.length < 2) add('warn', 'Concept slides teach better with 2–4 supporting points.', no);
+    if (s.type === 'flow' && (s.steps.length < 2 || s.steps.length > 5)) add('warn', 'Flows read best with 2–5 steps.', no);
+    if (s.type === 'example' && s.annotations.some((a) => a.quote && !s.prompt.includes(a.quote))) add('error', 'An annotation quote isn’t found in the example prompt.', no);
+    if (s.type === 'compare' && s.rows.some((r) => r.cells.length !== Math.max(s.columns.length, 2))) add('warn', 'Some table rows don’t have a cell for every column.', no);
+    if (s.type === 'recap' && s.items.length > 6) add('warn', 'Recaps read best with 6 items or fewer.', no);
+
+    // ---- chart rules ----
     if (s.type === 'chart') {
       if (s.data.length < 2) add('error', 'A chart needs at least 2 data points.', no);
-      if (s.data.length > 8) add('warn', `${s.data.length} data points; 8 or fewer reads better on a phone.`, no);
       if (s.highlight < 0 || s.highlight >= s.data.length) add('error', 'The highlighted point doesn’t exist.', no);
-      if (s.data.some((d) => !isFinite(d.value) || d.value < 0)) add('error', 'Chart values must be numbers of 0 or more.', no);
-      s.data.forEach((d) => len(d.label) > 12 && add('warn', `The label "${d.label}" is long; keep it to 12 characters or fewer.`, no));
-      if (!s.subtitle.trim()) add('warn', 'Add a subtitle saying what is measured and the unit.', no);
-      if (s.illustrative && !/สมมติ|ตัวอย่าง/.test(s.note)) add('error', 'Made-up numbers must say so on the slide: put "ตัวเลขสมมติ" in the note.', no);
-      if (!s.illustrative && post.sources.length === 0) add('error', 'Real chart numbers need a source.', no);
+      if (s.illustrative && !/สมมติ|ตัวอย่าง/.test(s.note)) add('error', 'Made-up numbers must say "ตัวเลขสมมติ" in the note.', no);
       const alt = post.captions.altText;
-      if (s.data.length && !s.data.every((d) => alt.includes(String(d.value)) || alt.includes(new Intl.NumberFormat('en-US').format(d.value))))
-        add('warn', 'Put the chart’s numbers in the alt text too (people using screen readers can’t see the bars).', no);
+      if (!s.data.every((d) => alt.includes(String(d.value)))) add('warn', 'Put the chart’s numbers in the alt text too.', no);
     }
-    if (s.mascot) {
-      if (len(s.mascot.say) > 40) add('warn', `The mascot’s line is ${len(s.mascot.say)} characters; keep speech bubbles to 40 or fewer.`, no);
-      if (!config.mascot.enabled) add('warn', 'This slide has a mascot, but the mascot is turned off in Settings.', no);
-    }
-    if (s.imagePrompt && !s.image) add('warn', 'The image prompt is ready but no image is uploaded yet.', no);
-    if (/[ก-๙]/.test(s.imagePrompt)) add('warn', 'Write image prompts in English; image models handle that better.', no);
 
-    const text = slideText(s);
-    STOCK_PHRASES.forEach((p) => text.includes(p) && add('warn', `Stock phrase "${p}". Rewrite it more naturally.`, no));
+    // ---- sources / unsupported claims ----
+    const st = s.story;
+    if (st.basis === 'source' && !st.sourceIds.length) add('error', 'Marked "source" but no source is linked to this slide.', no);
+    st.sourceIds.forEach((id) => (id < 1 || id > post.sources.length) && add('error', `Source #${id} doesn’t exist.`, no));
+    const claimText = s.type === 'chart' ? [s.title, s.subtitle, s.note].join(' ') : all;
+    if (CLAIM_PATTERN.test(claimText) && st.basis !== 'source' && !(s.type === 'chart' && s.illustrative)) add('warn', 'Numbers, prices or multiples appear without a linked source. Link a source or mark them as illustrative.', no);
+    if (!st.teachingPoint) add('warn', 'The storyboard has no teaching point for this slide.', no);
+
+    // ---- mascot / provider assets ----
+    const sp = slideProvider(post, s);
+    if (s.provider && !allowedProviders.has(s.provider)) add('error', `Slide is assigned to "${s.provider}", which isn’t one of this post’s providers.`, no);
+    if (s.mascot) {
+      const mp = s.mascot.provider || sp;
+      const prov = findProvider(registry, mp);
+      if (!allowedProviders.has(mp)) add('error', `Wrong mascot: "${mp}" isn’t a provider of this post.`, no);
+      if (mp !== sp) add('error', `Wrong mascot: this slide is about "${sp}" but shows the "${mp}" mascot.`, no);
+      if (prov && !prov.mascot) add('warn', `No approved mascot for ${prov.name}. A labelled text badge is shown instead; assign an asset in the provider registry.`, no);
+      if (prov?.mascot) {
+        const pose = prov.mascot.poses.find((p) => p.id === s.mascot!.pose);
+        if (!pose) add('error', `Pose "${s.mascot.pose}" doesn’t exist for ${prov.name}.`, no);
+        else if (pose.status !== 'approved') add('warn', `Pose "${pose.id}" is still "proposed". Approve it in Settings → Providers before publishing.`, no);
+      }
+      if (len(s.mascot.say) > 40) add('warn', 'The mascot’s tip is over 40 characters.', no);
+    }
+    if (s.imagePrompt && !s.image) add('warn', 'An illustration is planned but not uploaded yet (manual bridge).', no);
+    if (/mascot|character|claude|robot|crab/i.test(s.imagePrompt) && !s.imageIncludesMascot) add('warn', 'The illustration prompt mentions a character. Mascots are composited by the app, so keep them out of generated images.', no);
+
+    // ---- Thai language ----
+    texts.forEach((t) => {
+      if (/[^\s]ๆ/.test(t)) add('warn', `Put a space before ๆ (e.g. "นาน ๆ"): "${t.slice(0, 24)}…"`, no);
+      if (/ {2,}/.test(t)) add('warn', 'Double space in the text.', no);
+      if ((t.match(/\*\*/g) ?? []).length % 2) add('error', 'Unbalanced ** highlight marker.', no);
+      Object.entries(SPELLING).forEach(([bad, good]) => t.includes(bad) && add('warn', `Spelling: "${bad}" → "${good}"`, no));
+    });
+    STOCK_PHRASES.forEach((p) => all.includes(p) && add('warn', `Stock phrase "${p}". Rewrite it more naturally.`, no));
   });
 
-  // Ending particles must match the brand voice
-  const all = post.slides.map((s) => slideText(s) + ' ' + (s.mascot?.say ?? '')).join(' ') + ' ' + post.captions.instagram + ' ' + post.captions.facebook;
-  if (config.particles === 'none' && /ครับ|ค่ะ/.test(all)) add('warn', 'Brand voice is "no particles", but ครับ/ค่ะ was found.');
-  if (config.particles === 'ครับ' && /ค่ะ/.test(all)) add('warn', 'Brand voice is ครับ, but ค่ะ was found.');
-  if (config.particles === 'ค่ะ' && /ครับ/.test(all)) add('warn', 'Brand voice is ค่ะ, but ครับ was found.');
+  // ---- particles ----
+  const everything = post.slides.flatMap(slideTexts).join(' ') + ' ' + post.captions.instagram + ' ' + post.captions.facebook;
+  if (config.particles === 'ครับ' && /ค่ะ|คะ(?![ก-๙])/.test(everything)) add('warn', 'Brand voice is ครับ, but ค่ะ/คะ was found.');
+  if (config.particles === 'ค่ะ' && /ครับ/.test(everything)) add('warn', 'Brand voice is ค่ะ, but ครับ was found.');
+  if (config.particles === 'none' && /ครับ|ค่ะ/.test(everything)) add('warn', 'Brand voice is "no particles", but ครับ/ค่ะ was found.');
 
-  // Captions
+  // ---- contrast (design tokens) ----
+  const c = config.colors;
+  if (contrast(c.ink, c.bg2) < 7) add('warn', `Text colour contrast on the background is ${contrast(c.ink, c.bg2).toFixed(1)}:1 (aim for 7:1).`);
+  if (contrast(c.muted, c.bg2) < 4.5) add('error', `Secondary text contrast is ${contrast(c.muted, c.bg2).toFixed(1)}:1, below 4.5:1.`);
+  [...allowedProviders].forEach((id) => {
+    const p = findProvider(registry, id);
+    if (p && contrast(p.accentText, '#FFFFFF') < 4.5) add('error', `${p.name} accentText contrast is ${contrast(p.accentText, '#FFFFFF').toFixed(1)}:1 on white (needs 4.5:1).`);
+  });
+
+  // ---- captions ----
   if (!post.captions.instagram.trim()) add('error', 'The Instagram caption is empty.');
   if (!post.captions.facebook.trim()) add('error', 'The Facebook caption is empty.');
-  if (post.captions.instagram.trim() && post.captions.instagram.trim() === post.captions.facebook.trim())
-    add('warn', 'The Facebook and Instagram captions are identical. Adapt them per platform.');
+  if (post.captions.instagram.trim() && post.captions.instagram.trim() === post.captions.facebook.trim()) add('warn', 'The Facebook and Instagram captions are identical. Adapt them per platform.');
   if ([...post.captions.instagram].length > 2200) add('error', 'The Instagram caption is over 2,200 characters.');
-  const tags = (post.captions.instagram.match(/#[^\s#]+/g) ?? []).length;
-  if (tags > 5) add('warn', `${tags} hashtags on Instagram; this brand uses 3–5.`);
+  if ((post.captions.instagram.match(/#[^\s#]+/g) ?? []).length > 5) add('warn', 'More than 5 hashtags on Instagram.');
   if (!post.captions.altText.trim()) add('warn', 'Alt text is empty.');
 
-  // Honesty: sources
-  if (post.sources.length === 0) add('error', 'No sources. Every factual post needs at least one official source URL.');
+  // ---- sources ----
+  if (post.sources.length === 0) add('error', 'No sources. Every factual post needs at least one primary source URL.');
   post.sources.forEach((s, i) => {
-    if (!/^https?:\/\//.test(s.url)) add('error', `Source ${i + 1} isn't a valid URL.`);
+    if (!/^https?:\/\//.test(s.url)) add('error', `Source ${i + 1} isn’t a valid URL.`);
     if (!s.checkedAt) add('warn', `Source ${i + 1} has no "checked on" date.`);
   });
-  if (!post.dataAsOf) add('warn', 'Missing the "ข้อมูล ณ วันที่" date for the last slide.');
+  if (!post.dataAsOf) add('warn', 'Missing the "ข้อมูล ณ วันที่" date.');
 
-  // Schedule
+  // ---- schedule ----
   if (!post.scheduledAt) add('warn', 'No posting time yet.');
   else {
-    const h = bkkHour(post.scheduledAt);
-    if (h < 10 || h >= 21) add('warn', 'The posting time is outside 10:00–21:00 Bangkok time.');
+    const hr = bkkHour(post.scheduledAt);
+    if (hr < 10 || hr >= 21) add('warn', 'The posting time is outside 10:00–21:00 Bangkok time.');
     if (new Date(post.scheduledAt).getTime() < Date.now() && post.status !== 'published') add('warn', 'The posting time is in the past.');
   }
 
-  // Media
-  if (opts.exportFresh === false) add('warn', 'Exported JPEGs are missing or older than your last edit. Export again.');
+  // ---- rendered output ----
+  if (opts.exportFresh === false) add('warn', 'Exported images are missing or older than the last edit. Export again.');
+  if (opts.exportFresh) opts.layoutIssues?.forEach((l) => add('error', `Render check: ${l.message}`, l.slide));
 
   return issues;
 }

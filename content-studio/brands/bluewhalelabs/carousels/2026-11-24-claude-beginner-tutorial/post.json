@@ -1,0 +1,324 @@
+{
+  "id": "2026-11-24-claude-beginner-tutorial",
+  "brand": "bluewhalelabs",
+  "title": "เริ่มใช้ Claude ครั้งแรก ฉบับมือใหม่",
+  "provider": "claude",
+  "providers": [],
+  "contentType": "tutorial",
+  "pillar": "Claude ใช้ยังไง",
+  "audience": "คนที่ยังไม่เคยใช้ Claude หรือเพิ่งสมัคร และอยากใช้ช่วยงานประจำวัน",
+  "objective": "เริ่มคุยกับ Claude ได้เองวันนี้ รู้วิธีถามให้ได้คำตอบที่ใช้ได้จริง และรู้ข้อควรระวัง",
+  "takeaway": "Claude ใช้ได้ทุกอุปกรณ์ เริ่มฟรีได้ และจะตอบตรงขึ้นมากเมื่อเราบอกงาน รูปแบบ และคนอ่านให้ชัด",
+  "inputs": {
+    "topic": "Claude beginner tutorial",
+    "sourceUrl": "https://support.claude.com/en/articles/8114491-get-started-with-claude",
+    "slideCount": 7,
+    "references": []
+  },
+  "hooks": [
+    {
+      "text": "เริ่มใช้ Claude ครั้งแรก ฉบับมือใหม่",
+      "mechanism": "promise"
+    },
+    {
+      "text": "สมัคร Claude แล้วไม่รู้จะพิมพ์อะไร?",
+      "mechanism": "relatable problem"
+    },
+    {
+      "text": "3 คำที่ทำให้ Claude ตอบตรงใจขึ้นทันที",
+      "mechanism": "bold-but-true"
+    }
+  ],
+  "selectedHook": 0,
+  "status": "draft",
+  "scheduledAt": "2026-11-24T12:15:00+07:00",
+  "slides": [
+    {
+      "type": "cover",
+      "kicker": "Claude · สำหรับมือใหม่",
+      "title": "เริ่มใช้ Claude\n**ครั้งแรก**",
+      "subtitle": "ใช้ที่ไหน ถามยังไง แนบไฟล์ และพลาดอะไรบ่อย จบในโพสต์เดียว",
+      "visual": "chat",
+      "chat": {
+        "user": "ช่วยสรุปอีเมลนี้เป็น 3 ข้อให้หัวหน้าอ่านหน่อยครับ",
+        "reply": "ได้เลยครับ นี่คือสรุป 3 ข้อที่อ่านจบในนาทีเดียว…"
+      },
+      "mascot": {
+        "pose": "default",
+        "placement": "corner"
+      },
+      "story": {
+        "teachingPoint": "Promise: a complete first-time guide to Claude",
+        "composition": "Title top-left; a chat window mock below showing a first request; Claude mascot standing in the card's corner",
+        "basis": "illustrative",
+        "sourceIds": []
+      }
+    },
+    {
+      "type": "concept",
+      "title": "Claude **คืออะไร**",
+      "definition": "ผู้ช่วย AI ของ Anthropic ที่คุยด้วยภาษาธรรมดาได้ ช่วยคิด เขียน สรุป และวิเคราะห์งาน",
+      "points": [
+        {
+          "icon": "globe",
+          "label": "เว็บ",
+          "text": "เข้าที่ claude.ai"
+        },
+        {
+          "icon": "desktop",
+          "label": "เดสก์ท็อป",
+          "text": "แอป Mac และ Windows"
+        },
+        {
+          "icon": "phone",
+          "label": "มือถือ",
+          "text": "แอป iOS และ Android"
+        }
+      ],
+      "mascot": {
+        "pose": "point-left",
+        "placement": "right",
+        "say": "ใช้ได้หลายที่เลยครับ"
+      },
+      "story": {
+        "teachingPoint": "What Claude is and where it runs",
+        "composition": "Cream definition card with terracotta bar; three platform cards with blue icons; mascot points at them",
+        "basis": "source",
+        "sourceIds": [
+          1,
+          6
+        ]
+      }
+    },
+    {
+      "type": "flow",
+      "title": "เริ่มต้นใน **3 ขั้น**",
+      "intro": "แพ็กเกจ Free เริ่มใช้ได้เลย ไม่ต้องจ่ายก่อน",
+      "steps": [
+        {
+          "icon": "user",
+          "label": "สมัครหรือล็อกอิน",
+          "text": "เข้า claude.ai หรือเปิดแอป แล้วสร้างบัญชี"
+        },
+        {
+          "icon": "chat",
+          "label": "พิมพ์ข้อความแรก",
+          "text": "เล่าว่าอยากให้ช่วยอะไร เหมือนคุยกับเพื่อนร่วมงาน"
+        },
+        {
+          "icon": "refresh",
+          "label": "คุยต่อเพื่อปรับ",
+          "text": "ยังไม่ตรงใจ บอกเพิ่มในแชทเดิมได้เลย"
+        }
+      ],
+      "story": {
+        "teachingPoint": "The 3-step path from zero to a first useful answer",
+        "composition": "Vertical numbered flow with arrows; terracotta icon tiles on the right of each step",
+        "basis": "source",
+        "sourceIds": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "type": "example",
+      "title": "ถามแบบนี้ **ได้คำตอบตรงขึ้น**",
+      "prompt": "ช่วยสรุปอีเมลนี้เป็น 3 ข้อ ให้หัวหน้าอ่านจบใน 1 นาที ใช้ภาษาสุภาพ",
+      "annotations": [
+        {
+          "quote": "สรุปอีเมลนี้",
+          "label": "งาน",
+          "text": "บอกให้ชัดว่าทำอะไร"
+        },
+        {
+          "quote": "3 ข้อ",
+          "label": "รูปแบบ",
+          "text": "กำหนดหน้าตาคำตอบ"
+        },
+        {
+          "quote": "ให้หัวหน้าอ่าน",
+          "label": "คนอ่าน",
+          "text": "บอกว่าเขียนให้ใคร"
+        }
+      ],
+      "reply": [
+        "ลูกค้าขอเลื่อนส่งงานเป็นวันศุกร์",
+        "ต้องอนุมัติงบเพิ่มก่อนเริ่มงาน",
+        "ควรตอบกลับลูกค้าภายในพรุ่งนี้"
+      ],
+      "replyNote": "ตัวอย่างคำตอบ (สมมติ)",
+      "story": {
+        "teachingPoint": "A good prompt names the task, the format and the reader",
+        "composition": "Blue message bubble with three terracotta-underlined, numbered phrases; three annotation cards; Claude's example reply below with the mascot as avatar",
+        "basis": "source",
+        "sourceIds": [
+          5
+        ]
+      }
+    },
+    {
+      "type": "howto",
+      "title": "ทริกที่ **มือใหม่ควรรู้**",
+      "items": [
+        {
+          "icon": "plus",
+          "ui": "แนบไฟล์",
+          "label": "แนบไฟล์หรือรูป",
+          "text": "กดปุ่ม + ลากไฟล์มาวาง หรือวางรูปที่ก๊อปไว้ได้เลย"
+        },
+        {
+          "icon": "pencil",
+          "ui": "แก้ไข",
+          "label": "แก้ข้อความแล้วส่งใหม่",
+          "text": "กดไอคอนดินสอที่ข้อความของเรา ปรับคำถามได้โดยไม่ต้องเริ่มใหม่"
+        },
+        {
+          "icon": "chat",
+          "ui": "แชทใหม่",
+          "label": "แยกแชทตามเรื่อง",
+          "text": "เรื่องใหม่เริ่มแชทใหม่ คำตอบจะไม่ปนกับเรื่องเก่า"
+        }
+      ],
+      "story": {
+        "teachingPoint": "Three controls that make beginners productive",
+        "composition": "Three rows: a mock of the app button on the left, the explanation on the right",
+        "basis": "source",
+        "sourceIds": [
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "type": "compare",
+      "title": "พลาดบ่อย **แก้ง่าย**",
+      "style": "avoid-better",
+      "columns": [
+        "เลี่ยงแบบนี้",
+        "ลองแบบนี้แทน"
+      ],
+      "rows": [
+        {
+          "label": "",
+          "cells": [
+            "ถามกว้าง ๆ เช่น “เขียนโพสต์ให้หน่อย”",
+            "บอกเป้าหมาย คนอ่าน และความยาวที่ต้องการ"
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            "เชื่อทุกคำตอบทันที",
+            "ตรวจตัวเลขและข้อมูลสำคัญจากแหล่งต้นทาง"
+          ]
+        },
+        {
+          "label": "",
+          "cells": [
+            "แปะข้อมูลลับหรือข้อมูลส่วนตัวลูกค้า",
+            "ตัดข้อมูลที่ระบุตัวตนออกก่อนส่ง"
+          ]
+        }
+      ],
+      "mascot": {
+        "pose": "think",
+        "placement": "right",
+        "say": "ข้อ 2 สำคัญมากครับ"
+      },
+      "story": {
+        "teachingPoint": "Limitations and common beginner mistakes, with the fix for each",
+        "composition": "Two-column table: grey 'avoid' column with cross icon vs blue 'better' column with check icon; thinking mascot",
+        "basis": "advice",
+        "sourceIds": [
+          5
+        ]
+      }
+    },
+    {
+      "type": "recap",
+      "title": "สรุป **พร้อมเริ่มแล้ว**",
+      "items": [
+        "ใช้ได้ทั้งเว็บ เดสก์ท็อป และมือถือ",
+        "เริ่มฟรีได้ แล้วค่อยดูแพ็กเกจ",
+        "บอกงาน รูปแบบ และคนอ่านให้ชัด",
+        "แนบไฟล์และแก้ข้อความได้",
+        "ตรวจข้อมูลสำคัญก่อนใช้",
+        "ตัดข้อมูลส่วนตัวก่อนส่ง"
+      ],
+      "cta": "เซฟไว้ แล้วลองวันนี้เลย",
+      "mascot": {
+        "pose": "sparkle",
+        "placement": "right",
+        "say": "ลองแล้วเล่าให้ฟังด้วยนะครับ"
+      },
+      "story": {
+        "teachingPoint": "Six-point recap and one action",
+        "composition": "2×3 checklist grid; blue CTA button with the celebrating mascot beside it",
+        "basis": "source",
+        "sourceIds": [
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    }
+  ],
+  "captions": {
+    "instagram": "เริ่มใช้ Claude ครั้งแรก ฉบับมือใหม่ครับ\n\n• ใช้ได้ทั้งเว็บ แอปเดสก์ท็อป และมือถือ\n• เริ่มด้วยแพ็กเกจ Free ได้เลย\n• ถามให้ตรง: บอกงาน รูปแบบ และคนอ่าน\n• แนบไฟล์ได้ และแก้ข้อความแล้วส่งใหม่ได้\n\nเซฟไว้ แล้วลองวันนี้เลยครับ\n\nที่มา: support.claude.com, claude.com\n#Claude #AIภาษาไทย #ใช้AIทำงาน #มือใหม่หัดใช้AI",
+    "facebook": "ใครเพิ่งได้ยินชื่อ Claude แล้วยังไม่รู้จะเริ่มตรงไหน โพสต์นี้สรุปให้ครบในที่เดียวครับ\n\nClaude คือผู้ช่วย AI ของ Anthropic ใช้ได้ทั้งบนเว็บ claude.ai แอปเดสก์ท็อป (Mac/Windows) และแอปมือถือ (iOS/Android) แพ็กเกจ Free ก็เริ่มลองได้เลย\n\nเคล็ดลับที่ช่วยมือใหม่ได้มากที่สุดคือบอกให้ครบ 3 อย่าง: งานที่ต้องทำ รูปแบบคำตอบ และใครเป็นคนอ่าน เช่น “ช่วยสรุปอีเมลนี้เป็น 3 ข้อ ให้หัวหน้าอ่านจบใน 1 นาที”\n\nอีกสองอย่างที่ควรรู้: แนบไฟล์ได้ด้วยปุ่ม + และกดไอคอนดินสอเพื่อแก้ข้อความแล้วส่งใหม่ได้ ส่วนข้อมูลสำคัญ ควรตรวจจากแหล่งต้นทางก่อนใช้เสมอ\n\nเริ่มต้นจากคู่มือทางการ: https://support.claude.com/en/articles/8114491-get-started-with-claude\n\nงานแรกที่อยากให้ Claude ช่วยคืออะไรครับ\n#Claude #ใช้AIทำงาน",
+    "altText": "คารูเซล 7 ภาพของ Balena Studio สอนเริ่มใช้ Claude สำหรับมือใหม่ มีมาสคอต Claude สีส้มแบบพิกเซลช่วยอธิบาย ภาพแรกเป็นหน้าแชทตัวอย่าง ภาพสองอธิบายว่า Claude คือผู้ช่วย AI ของ Anthropic ใช้ได้บนเว็บ claude.ai แอปเดสก์ท็อป Mac และ Windows และแอปมือถือ iOS และ Android ภาพสามเป็นขั้นตอน 3 ขั้น สมัคร พิมพ์ข้อความแรก และคุยต่อเพื่อปรับ ภาพสี่เป็นตัวอย่างข้อความที่ระบุงาน รูปแบบ และคนอ่าน ภาพห้าแสดงปุ่มแนบไฟล์ ปุ่มแก้ไข และการแยกแชท ภาพหกเป็นตารางข้อผิดพลาดที่พบบ่อยกับวิธีแก้ ภาพเจ็ดสรุป 6 ข้อและชวนให้ลองใช้"
+  },
+  "sources": [
+    {
+      "claim": "Claude is available on the web (claude.ai), desktop apps for Mac and Windows, and mobile apps for iOS and Android",
+      "url": "https://support.claude.com/en/articles/8114491-get-started-with-claude",
+      "checkedAt": "2026-11-10",
+      "how": "search summary of the official help page"
+    },
+    {
+      "claim": "A Free plan exists; paid plans add more usage; app usage limits are separate from API pricing",
+      "url": "https://claude.com/pricing",
+      "checkedAt": "2026-11-10",
+      "how": "search summary of the official pricing page"
+    },
+    {
+      "claim": "Upload files and images with the + button, drag and drop, or paste from the clipboard",
+      "url": "https://support.claude.com/en/articles/8241126-upload-files-to-claude",
+      "checkedAt": "2026-11-10",
+      "how": "search summary of the official help page"
+    },
+    {
+      "claim": "Edit a sent message with the pencil icon and resubmit it",
+      "url": "https://academy.claude.com/courses/claude-101/your-first-conversation-with-claude",
+      "checkedAt": "2026-11-10",
+      "how": "search summary of Anthropic's Claude Academy lesson"
+    },
+    {
+      "claim": "Clear, specific instructions (task, format, audience) improve results",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/be-clear-and-direct",
+      "checkedAt": "2026-11-10",
+      "how": "search summary of Anthropic's prompt engineering docs"
+    },
+    {
+      "claim": "Claude is made by Anthropic",
+      "url": "https://claude.com/",
+      "checkedAt": "2026-11-10",
+      "how": "search result title: Claude by Anthropic"
+    }
+  ],
+  "dataAsOf": "2026-11-10",
+  "generation": {
+    "mode": "claude-code",
+    "notes": "Demo for the Balena Studio redesign. Sources were found through web search on 2026-11-10; this cloud session could not open the pages directly. Open each once before approving."
+  },
+  "history": [
+    {
+      "at": "2026-11-10T13:00:00.000Z",
+      "event": "created (claude-code demo: Claude beginner tutorial)"
+    }
+  ],
+  "createdAt": "2026-11-10T13:00:00.000Z",
+  "updatedAt": "2026-11-10T13:00:00.000Z"
+}

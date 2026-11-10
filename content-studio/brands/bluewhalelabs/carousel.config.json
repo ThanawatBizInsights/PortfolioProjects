@@ -1,18 +1,21 @@
 {
   "brand": "bluewhalelabs",
-  "displayName": "balena studio",
+  "displayName": "Balena Studio",
   "pageName": "Bluewhalelabs - เข้าใจ AI ให้มากขึ้น",
   "instagramHandle": "",
   "particles": "ครับ",
   "colors": {
     "bg": "#FFFFFF",
-    "bg2": "#EEEAFF",
-    "ink": "#151536",
-    "muted": "#5B5F7E",
+    "bg2": "#F1F3FF",
+    "ink": "#161B3D",
+    "muted": "#4B5275",
     "accent1": "#2F5BFF",
-    "accent2": "#7B4DFF",
-    "card": "rgba(255,255,255,0.72)",
-    "dark": "#16163A"
+    "accent2": "#A174F6",
+    "sky": "#67C7F2",
+    "violetText": "#7A4FD6",
+    "card": "#FFFFFF",
+    "line": "#E3E6F5",
+    "dark": "#161B3D"
   },
   "slots": [
     {
@@ -39,7 +42,7 @@
     "ศัพท์ AI / เข้าใจผิดบ่อย",
     "เบื้องหลังการสร้างระบบ"
   ],
-  "imageStyle": "soft 3D glassmorphism illustration, clean white and pale lavender background, blue (#2F5BFF) to purple (#7B4DFF) gradient accents, gentle studio lighting, friendly and modern, portrait 4:5, absolutely no text, no letters, no numbers, no logos, no watermarks",
+  "imageStyle": "clean flat-to-soft 3D educational illustration, white and pale blue-lavender background, accents in royal blue #2F5BFF, sky blue #67C7F2 and violet #A174F6, restrained gradients, rounded friendly shapes, portrait 4:5, no text, no letters, no numbers, no logos, no watermarks, no characters or mascots (the app adds the mascot separately)",
   "imageTools": [
     "ChatGPT (manual)",
     "Grok Image via Fuzion (manual)",
@@ -53,10 +56,9 @@
   "automation": {
     "enabled": false
   },
-  "mascot": {
-    "enabled": true,
-    "name": "น้องบาเลน่า",
-    "body": "#2F5BFF",
-    "belly": "#DCE3FF"
+  "logo": {
+    "file": "assets/brand/balena-studio-logo.png",
+    "width": 1246,
+    "height": 400
   }
 }
