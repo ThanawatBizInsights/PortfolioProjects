@@ -70,7 +70,7 @@ Topic → research → fact check → Thai copy → storyboard → asset selecti
 - `lib/schema.ts`: post, slide and brand-config shapes (zod)
 - `lib/store.ts`: file storage (swap for Supabase later); `lib/workflow.ts`: status rules
 - `lib/qc.ts`: quality checks (shared by the browser and the server)
-- `lib/claudePrompt.ts`: the brief Claude follows; `lib/exporter.ts`: JPEG export via headless Chromium
+- `lib/claudePrompt.ts`: the brief Claude follows; `lib/exporter.ts`: PNG + ZIP export via headless Chromium
 - `lib/publishLog.ts`: duplicate check + publishing log; `lib/modes.ts`: manual and automated mode availability
 - `components/SlideView.tsx`: the Balena Studio design system and layouts (cover, concept, flow, example, howto, compare, recap, chart + simple legacy layouts); mascots are composited from the registry
 
