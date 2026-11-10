@@ -3,6 +3,7 @@ import { DEFAULT_BRAND, getConfig, getQueue, listPosts } from '@/lib/store';
 import { STATUSES } from '@/lib/schema';
 import { bkkDate, formatBkk, isoToBkkInput, upcomingBkkDays } from '@/lib/time';
 import { ScaledSlide } from '@/components/SlideView';
+import { WelcomeMascot } from '@/components/WelcomeMascot';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,6 +11,9 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
   const brand = (await searchParams).brand ?? DEFAULT_BRAND;
   const [config, posts, queue] = await Promise.all([getConfig(brand), listPosts(brand), getQueue(brand)]);
   const days = upcomingBkkDays(14);
+  const freeSlots = days.reduce((n, d) => n + config.slots.filter((s) => s.day === d.day && !posts.some((p) => p.scheduledAt && bkkDate(p.scheduledAt) === d.date && isoToBkkInput(p.scheduledAt).slice(11) === s.time)).length, 0);
+  const toReview = posts.filter((p) => p.status === 'ready-for-review').length;
+  const greeting = `สวัสดีครับ ยินดีต้อนรับสู่ Balena Studio · 14 วันข้างหน้ามีช่องว่าง ${freeSlots} ช่อง · รอรีวิว ${toReview} โพสต์`;
 
   return (
     <div className="col" style={{ gap: 22 }}>
@@ -23,6 +27,8 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
         </div>
         <Link className="btn primary" href="/posts/new">+ New carousel</Link>
       </div>
+
+      <WelcomeMascot enabled={config.mascot.enabled} name={config.mascot.name} say={greeting} colors={{ body: config.mascot.body, belly: config.mascot.belly, ink: config.colors.ink }} />
 
       <section>
         <h2>Next 14 days</h2>

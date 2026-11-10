@@ -31,6 +31,8 @@ function slideText(s: Slide): string {
       return [s.title, s.prompt, s.note].join(' ');
     case 'summary':
       return [s.title, ...s.bullets, s.cta].join(' ');
+    case 'chart':
+      return [s.title, s.subtitle, s.note, ...s.data.map((d) => d.label)].join(' ');
   }
 }
 
@@ -66,6 +68,24 @@ export function runQc(post: Post, config: Config, opts: { exportFresh?: boolean 
       if (s.bullets.length > LIMITS.bullets) add('warn', `${s.bullets.length} bullets; keep it to ${LIMITS.bullets} or fewer.`, no);
       s.bullets.forEach((b) => len(b) > LIMITS.bullet && add('warn', `The bullet "${b.slice(0, 20)}…" is long.`, no));
       if (!s.cta.trim()) add('warn', 'The last slide has no CTA.', no);
+      if (s.mascot && len(s.cta) > 24) add('warn', `With the mascot beside it, the CTA has room for about 24 characters (now ${len(s.cta)}).`, no);
+    }
+    if (s.type === 'chart') {
+      if (s.data.length < 2) add('error', 'A chart needs at least 2 data points.', no);
+      if (s.data.length > 8) add('warn', `${s.data.length} data points; 8 or fewer reads better on a phone.`, no);
+      if (s.highlight < 0 || s.highlight >= s.data.length) add('error', 'The highlighted point doesn’t exist.', no);
+      if (s.data.some((d) => !isFinite(d.value) || d.value < 0)) add('error', 'Chart values must be numbers of 0 or more.', no);
+      s.data.forEach((d) => len(d.label) > 12 && add('warn', `The label "${d.label}" is long; keep it to 12 characters or fewer.`, no));
+      if (!s.subtitle.trim()) add('warn', 'Add a subtitle saying what is measured and the unit.', no);
+      if (s.illustrative && !/สมมติ|ตัวอย่าง/.test(s.note)) add('error', 'Made-up numbers must say so on the slide: put "ตัวเลขสมมติ" in the note.', no);
+      if (!s.illustrative && post.sources.length === 0) add('error', 'Real chart numbers need a source.', no);
+      const alt = post.captions.altText;
+      if (s.data.length && !s.data.every((d) => alt.includes(String(d.value)) || alt.includes(new Intl.NumberFormat('en-US').format(d.value))))
+        add('warn', 'Put the chart’s numbers in the alt text too (people using screen readers can’t see the bars).', no);
+    }
+    if (s.mascot) {
+      if (len(s.mascot.say) > 40) add('warn', `The mascot’s line is ${len(s.mascot.say)} characters; keep speech bubbles to 40 or fewer.`, no);
+      if (!config.mascot.enabled) add('warn', 'This slide has a mascot, but the mascot is turned off in Settings.', no);
     }
     if (s.imagePrompt && !s.image) add('warn', 'The image prompt is ready but no image is uploaded yet.', no);
     if (/[ก-๙]/.test(s.imagePrompt)) add('warn', 'Write image prompts in English; image models handle that better.', no);
@@ -75,7 +95,7 @@ export function runQc(post: Post, config: Config, opts: { exportFresh?: boolean 
   });
 
   // Ending particles must match the brand voice
-  const all = post.slides.map(slideText).join(' ') + ' ' + post.captions.instagram + ' ' + post.captions.facebook;
+  const all = post.slides.map((s) => slideText(s) + ' ' + (s.mascot?.say ?? '')).join(' ') + ' ' + post.captions.instagram + ' ' + post.captions.facebook;
   if (config.particles === 'none' && /ครับ|ค่ะ/.test(all)) add('warn', 'Brand voice is "no particles", but ครับ/ค่ะ was found.');
   if (config.particles === 'ครับ' && /ค่ะ/.test(all)) add('warn', 'Brand voice is ครับ, but ค่ะ was found.');
   if (config.particles === 'ค่ะ' && /ครับ/.test(all)) add('warn', 'Brand voice is ค่ะ, but ครับ was found.');

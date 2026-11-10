@@ -1,0 +1,160 @@
+{
+  "id": "2026-11-17-claude-api-model-prices",
+  "brand": "bluewhalelabs",
+  "title": "Claude API รุ่นไหนคุ้ม ราคาต่างกันได้ถึง 80 เท่า",
+  "pillar": "AI ทำงานจริง",
+  "audience": "คนที่เริ่มสร้างเว็บหรือแอปด้วย Claude API และอยากคุมค่าใช้จ่าย",
+  "takeaway": "API คิดเงินตาม token และรุ่นเล็กถูกกว่ารุ่นใหญ่หลายสิบเท่า เริ่มจากรุ่นเล็ก วัดผล แล้วค่อยขยับ",
+  "hooks": [
+    {
+      "text": "Claude API รุ่นไหนคุ้ม? ราคาต่างกันได้ถึง 80 เท่า",
+      "mechanism": "bold-but-true"
+    },
+    {
+      "text": "ใช้ Claude รุ่นแพงสุดทุกงาน อาจจ่ายเกินจำเป็น",
+      "mechanism": "relatable problem"
+    },
+    {
+      "text": "token คืออะไร ทำไมบิล API ถึงพุ่ง",
+      "mechanism": "question"
+    }
+  ],
+  "selectedHook": 0,
+  "status": "draft",
+  "scheduledAt": "2026-11-17T12:15:00+07:00",
+  "slides": [
+    {
+      "type": "cover",
+      "kicker": "AI ทำงานจริง",
+      "title": "Claude API\nรุ่นไหน**คุ้ม**?",
+      "subtitle": "ราคาต่างกันได้ถึง 80 เท่า",
+      "imagePrompt": "A cute glossy 3D balance scale weighing a tiny glowing cube against a large glowing cube, a few floating coins, soft studio lighting, lots of empty space at the top",
+      "image": "",
+      "mascot": {
+        "mood": "happy",
+        "say": "",
+        "look": "auto"
+      }
+    },
+    {
+      "type": "statement",
+      "title": "API คิดเงิน\nตาม **token**",
+      "body": "token คือชิ้นส่วนเล็ก ๆ ของข้อความ API นับทั้งที่ส่งเข้าไปและที่ตอบกลับมา ข้อความยิ่งยาว ยิ่งใช้ token มาก",
+      "imagePrompt": "",
+      "image": ""
+    },
+    {
+      "type": "chart",
+      "title": "ราคา output ต่อ 1 ล้าน token",
+      "subtitle": "หน่วย: ดอลลาร์สหรัฐ · ราคามาตรฐานของ API",
+      "chartKind": "bar",
+      "data": [
+        {
+          "label": "Haiku 5.5",
+          "value": 0.5
+        },
+        {
+          "label": "Sonnet 5.5",
+          "value": 10
+        },
+        {
+          "label": "Opus 5.5",
+          "value": 20
+        },
+        {
+          "label": "Fable 5.2",
+          "value": 40
+        }
+      ],
+      "highlight": 0,
+      "valuePrefix": "$",
+      "valueSuffix": "",
+      "note": "Haiku 5.5 คิด $0.50 เมื่อ prompt ไม่เกิน 100K token",
+      "illustrative": false,
+      "imagePrompt": "",
+      "image": "",
+      "mascot": {
+        "mood": "surprised",
+        "say": "ถูกกว่ากัน 80 เท่าเลยครับ",
+        "look": "auto"
+      }
+    },
+    {
+      "type": "step",
+      "number": 1,
+      "title": "งานง่าย **เริ่มจากรุ่นเล็ก**",
+      "body": "จัดหมวดข้อความ สรุปสั้น ๆ ตอบคำถามซ้ำ ๆ ลองรุ่นเล็กก่อน ถ้าคุณภาพพอ ก็ประหยัดไปได้เยอะ",
+      "imagePrompt": "",
+      "image": ""
+    },
+    {
+      "type": "step",
+      "number": 2,
+      "title": "งานยาก **ค่อยขยับรุ่นใหญ่**",
+      "body": "งานวิเคราะห์ซับซ้อนหรือโค้ดยาว ๆ ค่อยใช้รุ่นที่แพงขึ้น และลองเทียบผลกับรุ่นเล็กก่อนตัดสินใจ",
+      "imagePrompt": "",
+      "image": ""
+    },
+    {
+      "type": "step",
+      "number": 3,
+      "title": "ราคานี้คือ **API**\nไม่ใช่แพ็กเกจแอป",
+      "body": "ถ้าใช้ Claude ผ่านแอปหรือเว็บแบบ Pro หรือ Max จะจ่ายรายเดือน ไม่ได้คิดตาม token แบบนี้",
+      "imagePrompt": "",
+      "image": "",
+      "mascot": {
+        "mood": "think",
+        "say": "สองอย่างนี้แยกกันนะครับ",
+        "look": "auto"
+      }
+    },
+    {
+      "type": "summary",
+      "title": "สรุป **เลือกรุ่นให้คุ้ม**",
+      "bullets": [
+        "API คิดเงินตาม token",
+        "รุ่นเล็กถูกกว่ารุ่นใหญ่หลายสิบเท่า",
+        "เริ่มเล็ก วัดผล แล้วค่อยขยับ",
+        "ราคาเปลี่ยนได้ เช็กหน้า pricing เสมอ"
+      ],
+      "cta": "เซฟไว้ก่อนเริ่มโปรเจกต์ API",
+      "imagePrompt": "",
+      "image": "",
+      "mascot": {
+        "mood": "talk",
+        "say": "ลองเทียบดูได้เลยครับ",
+        "look": "auto"
+      }
+    }
+  ],
+  "captions": {
+    "instagram": "Claude API รุ่นไหนคุ้ม? ราคาต่างกันได้ถึง 80 เท่า\n\nราคา output ต่อ 1 ล้าน token (ราคามาตรฐาน)\nHaiku 5.5: $0.50\nSonnet 5.5: $10\nOpus 5.5: $20\nFable 5.2: $40\n\nงานง่ายเริ่มจากรุ่นเล็ก งานยากค่อยขยับ เซฟไว้ก่อนเริ่มโปรเจกต์นะครับ\n\nที่มา: platform.claude.com (ข้อมูล ณ 10 พ.ย. 2569)\n#Claude #ClaudeAPI #สายโค้ด #ใช้AIทำงาน",
+    "facebook": "ใครเริ่มทำเว็บหรือแอปด้วย Claude API แล้วกังวลเรื่องค่าใช้จ่าย โพสต์นี้ช่วยได้ครับ\n\nAPI คิดเงินตามจำนวน token ทั้งขาเข้าและขาออก และแต่ละรุ่นราคาต่างกันมาก ดูราคา output ต่อ 1 ล้าน token ตามราคามาตรฐานบนหน้า pricing ของ Anthropic\n• Haiku 5.5: $0.50 (เมื่อ prompt ไม่เกิน 100K token)\n• Sonnet 5.5: $10\n• Opus 5.5: $20\n• Fable 5.2: $40\n\nแนวทางง่าย ๆ คือเริ่มจากรุ่นเล็กกับงานที่ไม่ซับซ้อน วัดคุณภาพ แล้วค่อยขยับรุ่นเมื่อจำเป็น\n\nอีกเรื่องที่คนสับสนบ่อย: ราคานี้คือของ API ถ้าใช้ Claude ผ่านแอปแบบ Pro หรือ Max จะจ่ายเป็นรายเดือนแยกกัน\n\nดูราคาล่าสุด: https://platform.claude.com/docs/en/about-claude/pricing\n\nตอนนี้ใช้รุ่นไหนกับงานอะไรอยู่ครับ\n#Claude #ClaudeAPI",
+    "altText": "คารูเซล 7 ภาพ หัวข้อ Claude API รุ่นไหนคุ้ม อธิบายว่า API คิดเงินตาม token มีกราฟแท่งราคา output ต่อ 1 ล้าน token: Haiku 5.5 $0.50, Sonnet 5.5 $10, Opus 5.5 $20, Fable 5.2 $40 โดยเน้นแท่ง Haiku 5.5 ที่ถูกที่สุด แนะนำให้เริ่มจากรุ่นเล็กแล้วค่อยขยับ และเตือนว่าราคานี้ไม่ใช่ค่าแพ็กเกจแอป Pro หรือ Max มีวาฬพิกเซลสีน้ำเงินช่วยอธิบาย"
+  },
+  "sources": [
+    {
+      "claim": "API prices per million tokens: Haiku 5.5 $0.10/$0.50 (≤100K prompts), Sonnet 5.5 $2/$10, Opus 5.5 $4/$20, Fable 5.2 $8/$40",
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "checkedAt": "2026-11-10"
+    },
+    {
+      "claim": "Pro and Max are monthly app subscriptions, separate from API pricing",
+      "url": "https://claude.com/pricing",
+      "checkedAt": "2026-11-10"
+    }
+  ],
+  "dataAsOf": "2026-11-10",
+  "generation": {
+    "mode": "claude-code",
+    "notes": "Chart demo. Prices confirmed via search of the official pricing page on 2026-11-10 (the page itself could not be opened from the cloud session). Re-check prices on the posting day."
+  },
+  "history": [
+    {
+      "at": "2026-11-10T10:00:00.000Z",
+      "event": "created (claude-code sample, chart demo)"
+    }
+  ],
+  "createdAt": "2026-11-10T10:00:00.000Z",
+  "updatedAt": "2026-11-10T10:00:00.000Z"
+}

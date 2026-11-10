@@ -36,6 +36,9 @@ Slide types (use exactly these fields):
 - {"type":"step","number":1,"title":"≤34 chars","body":"≤140 chars","imagePrompt":""}
 - {"type":"prompt","title":"≤34 chars","prompt":"a copy-ready prompt (Thai or English), ≤420 chars","note":"one short tip"}
 - {"type":"summary","title":"≤34 chars","bullets":["≤60 chars", "... max 5"],"cta":"ONE action, e.g. เซฟไว้ลองทำ / ติดตามไว้"}
+- {"type":"chart","title":"≤34 chars","subtitle":"what is measured + unit","chartKind":"bar|line","data":[{"label":"≤12 chars","value":0}],"highlight":0,"valuePrefix":"$","valueSuffix":"","note":"short note","illustrative":false}
+  Charts: ONE series only, 2–8 points, highlight the one point the story is about. Use REAL numbers from a cited official source; if numbers are made up to explain an idea, set "illustrative": true and the note MUST contain "ตัวเลขสมมติ". Put all chart numbers in altText too.
+Mascot (${config.mascot.enabled ? `on; the brand's pixel whale${config.mascot.name ? ` "${config.mascot.name}"` : ''}` : 'off; omit'}): optionally add to 2–4 slides  "mascot":{"mood":"idle|happy|think|talk|surprised","say":"≤40 Thai chars, optional","look":"auto"}. Good spots: cover (happy), a surprising number (surprised), a tricky point (think), the summary (talk). Not on every slide.
 Structure: cover hook → why it matters (statement) → one idea per slide (steps) → a copy-ready example (prompt) → summary + one CTA.
 Make the cover understandable in 1 second.
 

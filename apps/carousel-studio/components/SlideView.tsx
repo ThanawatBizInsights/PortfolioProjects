@@ -2,6 +2,8 @@
 // Pure component: no hooks, so it renders on the server and the client the same way.
 import type { CSSProperties, ReactNode } from 'react';
 import type { Config, Post, Slide } from '@/lib/schema';
+import { ChartSvg, pointX } from './ChartSvg';
+import { PixelWhale, whaleHeight } from './PixelWhale';
 
 export const W = 1080;
 export const H = 1350;
@@ -130,6 +132,21 @@ export function SlideView({ slide, index, post, config, editing }: Props) {
       if (slide.imagePrompt || slide.image) { overlay = imageBox(430); reserve = 430 + 128 + 40; }
       break;
 
+    case 'chart':
+      content = (
+        <>
+          <h2 style={title(66)}>
+            <Rich text={slide.title} gradient={gradient} />
+          </h2>
+          {slide.subtitle ? <p style={{ ...body, fontSize: 34, marginTop: 12 }}>{slide.subtitle}</p> : null}
+          <div style={{ marginTop: 36 }}>
+            <ChartSvg chart={slide} config={config} />
+          </div>
+          {slide.note ? <p style={{ ...body, fontSize: 30, marginTop: 8 }}>{slide.note}</p> : null}
+        </>
+      );
+      break;
+
     case 'prompt':
       content = (
         <>
@@ -177,6 +194,54 @@ export function SlideView({ slide, index, post, config, editing }: Props) {
       break;
   }
 
+  // ---- mascot (optional per slide) ----
+  let mascotNode: ReactNode = null;
+  if (slide.mascot && config.mascot.enabled) {
+    const M = 220;
+    const mH = whaleHeight(M);
+    const hasCta = slide.type === 'summary' && !!slide.cta;
+    const insideImage = !!overlay && !hasCta;
+    // summary: the whale sits beside the CTA button (button shortens), bubble above the whale
+    const bottom = hasCta ? 132 : insideImage ? 128 + 24 : 118;
+    if (hasCta) {
+      overlay = (
+        <div style={{ position: 'absolute', left: 72, right: 72 + M + 16, bottom: 140, textAlign: 'center', padding: '30px 34px', borderRadius: 999, background: gradient, color: '#fff', fontFamily: 'Heading', fontWeight: 700, fontSize: slide.type === 'summary' && [...slide.cta].length > 18 ? 34 : 42, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', boxShadow: `0 24px 60px ${c.accent2}55` }}>
+          {slide.type === 'summary' ? slide.cta : ''}
+        </div>
+      );
+      if (slide.mascot.say) reserve = Math.max(reserve, bottom + mH + 100);
+    } else if (!insideImage) reserve = Math.max(reserve, bottom + mH + 24);
+    const left = W - 72 - M;
+    const eye = { x: left + (M * 14) / 18, y: H - bottom - mH + (mH * 7) / 13 };
+    const dirs = { left: { x: -1, y: 0 }, right: { x: 1, y: 0 }, up: { x: 0, y: -1 }, down: { x: 0, y: 1 }, center: { x: 0, y: 0 } } as const;
+    let look: { x: number; y: number };
+    if (slide.mascot.look !== 'auto') look = dirs[slide.mascot.look];
+    else {
+      // auto: glance at the chart's highlighted point, otherwise at the text (up-left)
+      const target = slide.type === 'chart' && slide.data[slide.highlight] ? { x: 72 + pointX(slide, slide.highlight), y: 650 } : { x: 300, y: 450 };
+      const dx = target.x - eye.x;
+      const dy = target.y - eye.y;
+      const m = Math.max(Math.abs(dx), Math.abs(dy), 1);
+      look = { x: dx / m, y: dy / m };
+    }
+    const bubbleStyle: CSSProperties = hasCta
+      ? { position: 'absolute', right: 72, bottom: bottom + mH + 14, maxWidth: 560 }
+      : { position: 'absolute', right: 72 + M + 6, bottom: bottom + mH * 0.42, maxWidth: 560 };
+    mascotNode = (
+      <>
+        {slide.mascot.say ? (
+          <div style={{ ...bubbleStyle, background: '#ffffff', borderRadius: 30, padding: '20px 28px', fontFamily: 'Body', fontWeight: 600, fontSize: 32, lineHeight: 1.45, color: c.ink, boxShadow: '0 16px 40px rgba(30,30,90,0.16)' }}>
+            {slide.mascot.say}
+            <span style={hasCta ? { position: 'absolute', right: 70, bottom: -9, width: 22, height: 22, background: '#ffffff', transform: 'rotate(45deg)', borderRadius: 4 } : { position: 'absolute', right: -9, bottom: 26, width: 22, height: 22, background: '#ffffff', transform: 'rotate(45deg)', borderRadius: 4 }} />
+          </div>
+        ) : null}
+        <div style={{ position: 'absolute', left, bottom }}>
+          <PixelWhale mood={slide.mascot.mood} look={look} size={M} colors={{ body: config.mascot.body, belly: config.mascot.belly, ink: c.ink }} />
+        </div>
+      </>
+    );
+  }
+
   const sources = [...new Set(post.sources.map((s) => domain(s.url)).filter(Boolean))].slice(0, 2).join(', ');
 
   return (
@@ -205,6 +270,7 @@ export function SlideView({ slide, index, post, config, editing }: Props) {
         <div style={{ width: '100%' }}>{content}</div>
       </div>
       {overlay}
+      {mascotNode}
 
       {/* footer */}
       <div style={{ position: 'absolute', bottom: 56, left: 72, right: 72, display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: 'Body', fontSize: 28, color: c.muted }}>

@@ -1,14 +1,14 @@
 {
-  "at": "2026-11-10T05:36:25.808Z",
-  "contentHash": "b2c5135af8b6e6cb",
+  "at": "2026-11-10T05:54:11.836Z",
+  "contentHash": "960b8853698c9885",
   "files": [
     {
       "name": "slide-01.jpg",
-      "sha256": "1aa9f0f908f53b3f9b06a35701e6a88ff9a77d31ddda53525ae02d16fb4f97d8"
+      "sha256": "307181cfd726980a212f6e3c74bd9e6fda414fde86ad4301daa63a0860dd785d"
     },
     {
       "name": "slide-02.jpg",
-      "sha256": "c78f30fc134c0a684147e381f5d6b88f8df1ec0b7afebc5e5acb0aa05b37dd21"
+      "sha256": "5ab30dfac68eae6e2c2ee67950aee8d201a6638d7a4da4dab80108b5c97719db"
     },
     {
       "name": "slide-03.jpg",
@@ -36,7 +36,7 @@
     },
     {
       "name": "slide-09.jpg",
-      "sha256": "1837a349840dcd1142eb0e0dda033fe9484ebacbc654caac85dc8ad8bfe6d785"
+      "sha256": "d3023f8b5385e3a38886ab8ae7bd054aee5253e4344144ace7d19a41c1f9197e"
     }
   ]
 }

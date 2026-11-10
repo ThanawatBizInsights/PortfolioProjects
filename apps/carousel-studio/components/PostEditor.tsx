@@ -2,6 +2,8 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { ScaledSlide } from './SlideView';
+import { MascotBuddy } from './MascotBuddy';
+import { MOODS, type Mood } from './PixelWhale';
 import { runQc, type Issue } from '@/lib/qc';
 import { SLIDE_TYPES, type Config, type Post, type Slide, type SlideType } from '@/lib/schema';
 import { bkkInputToIso, formatBkk, isoToBkkInput } from '@/lib/time';
@@ -12,15 +14,17 @@ type Props = { initialPost: Post; config: Config; initialExportFresh: boolean; i
 type Tab = 'slide' | 'captions' | 'plan' | 'publish' | 'qc';
 
 function convert(s: Slide, type: SlideType): Slide {
-  const img = { imagePrompt: s.imagePrompt, image: s.image };
+  const img = { imagePrompt: s.imagePrompt, image: s.image, mascot: s.mascot };
   const t = s.title;
-  const text = 'body' in s ? s.body : s.type === 'cover' ? s.subtitle : '';
+  const text = 'body' in s ? s.body : s.type === 'cover' || s.type === 'chart' ? s.subtitle : '';
   switch (type) {
     case 'cover': return { type, kicker: '', title: t, subtitle: text, ...img };
     case 'statement': return { type, title: t, body: text, ...img };
     case 'step': return { type, number: undefined, title: t, body: text, ...img };
     case 'prompt': return { type, title: t, prompt: '', note: text, ...img };
     case 'summary': return { type, title: t, bullets: text ? [text] : [''], cta: '', ...img };
+    case 'chart':
+      return { type, title: t, subtitle: text, chartKind: 'bar', data: [{ label: 'A', value: 10 }, { label: 'B', value: 25 }, { label: 'C', value: 15 }], highlight: 1, valuePrefix: '', valueSuffix: '', note: 'ตัวเลขสมมติ', illustrative: true, ...img };
   }
 }
 
@@ -188,6 +192,11 @@ export function PostEditor({ initialPost, config, initialExportFresh, initialMan
 
         {/* Side panel */}
         <div className="card">
+          {config.mascot.enabled ? (
+            <div style={{ marginBottom: 14 }}>
+              <MascotBuddy {...guide(post, issues, exportFresh && !dirty, busy, dirty)} look={{ x: -1, y: tab === 'qc' ? 0.6 : -0.2 }} colors={{ body: config.mascot.body, belly: config.mascot.belly, ink: config.colors.ink }} size={96} />
+            </div>
+          ) : null}
           <div className="tabs">
             {(['slide', 'captions', 'plan', 'publish', 'qc'] as Tab[]).map((t) => (
               <button key={t} className={`tab ${tab === t ? 'active' : ''}`} onClick={() => setTab(t)}>
@@ -260,6 +269,22 @@ export function PostEditor({ initialPost, config, initialExportFresh, initialMan
   );
 }
 
+// ---------- Mascot guide: what the whale says about the current state ----------
+function guide(post: Post, issues: Issue[], fresh: boolean, busy: string, dirty: boolean): { mood: Mood; say: string } {
+  const errors = issues.filter((i) => i.level === 'error').length;
+  const warns = issues.length - errors;
+  if (busy) return { mood: 'talk', say: `${busy}… รอแป๊บนะครับ` };
+  if (post.status === 'published') return { mood: 'happy', say: 'โพสต์แล้ว เยี่ยมมากครับ! ดูผลได้ใน 24 ชั่วโมง' };
+  if (errors) return { mood: 'surprised', say: `เจอ ${errors} จุดที่ต้องแก้ก่อนส่งรีวิวครับ ดูที่แท็บ QC ได้เลย` };
+  if (dirty) return { mood: 'idle', say: 'มีส่วนที่แก้ไว้ อย่าลืมกด Save นะครับ' };
+  if (post.status === 'approved') return { mood: 'happy', say: 'อนุมัติแล้ว! ไปที่แท็บ publish เพื่อโพสต์ได้เลยครับ' };
+  if (post.status === 'scheduled') return { mood: 'happy', say: 'ตั้งเวลาไว้แล้ว โพสต์ขึ้นเมื่อไหร่ แปะลิงก์กลับมาด้วยนะครับ' };
+  if (post.status === 'ready-for-review' && !fresh) return { mood: 'think', say: 'กด Export JPEGs ก่อนนะครับ จะได้อนุมัติจากภาพจริง' };
+  if (post.status === 'ready-for-review') return { mood: 'happy', say: 'ภาพพร้อมแล้ว ตรวจรอบสุดท้ายแล้วกด Approve ได้เลยครับ' };
+  if (warns) return { mood: 'think', say: `ผ่านแล้วครับ แต่มีคำแนะนำ ${warns} ข้อ ลองดูก่อนส่งรีวิว` };
+  return { mood: 'happy', say: 'ทุกอย่างเรียบร้อย ส่งรีวิวได้เลยครับ' };
+}
+
 // ---------- Slide panel ----------
 function SlidePanel(props: {
   slide: Slide; index: number; total: number; config: Config; readOnly: boolean; brandPostPath: string;
@@ -312,6 +337,65 @@ function SlidePanel(props: {
         </label>
         {ta('Call to action (one)', s.cta, 'cta', 1)}
       </> : null}
+
+      {s.type === 'chart' ? <>
+        {ta('Title', s.title, 'title', 2)}
+        {ta('Subtitle (what is measured + unit)', s.subtitle, 'subtitle', 2)}
+        <div className="row">
+          <label style={{ flex: 1 }}>Chart
+            <select disabled={readOnly} value={s.chartKind} onChange={(e) => onChange({ chartKind: e.target.value } as Partial<Slide>)}>
+              <option value="bar">Bar (compare)</option><option value="line">Line (over time)</option>
+            </select>
+          </label>
+          <label style={{ width: 90 }}>Prefix<input readOnly={readOnly} value={s.valuePrefix} placeholder="$" onChange={(e) => onChange({ valuePrefix: e.target.value } as Partial<Slide>)} /></label>
+          <label style={{ width: 90 }}>Suffix<input readOnly={readOnly} value={s.valueSuffix} placeholder="%" onChange={(e) => onChange({ valueSuffix: e.target.value } as Partial<Slide>)} /></label>
+        </div>
+        <label>Data (one series; tick the point the story is about)</label>
+        {s.data.map((d, i) => (
+          <div key={i} className="row" style={{ flexWrap: 'nowrap' }}>
+            <input type="radio" style={{ width: 'auto' }} disabled={readOnly} checked={s.highlight === i} onChange={() => onChange({ highlight: i } as Partial<Slide>)} title="Highlight" />
+            <input readOnly={readOnly} value={d.label} onChange={(e) => onChange({ data: s.data.map((x, j) => (j === i ? { ...x, label: e.target.value } : x)) } as Partial<Slide>)} />
+            <input readOnly={readOnly} type="number" step="any" style={{ width: 110 }} value={d.value} onChange={(e) => onChange({ data: s.data.map((x, j) => (j === i ? { ...x, value: Number(e.target.value) } : x)) } as Partial<Slide>)} />
+            <button className="btn sm danger" disabled={readOnly || s.data.length <= 1} onClick={() => onChange({ data: s.data.filter((_, j) => j !== i), highlight: Math.min(s.highlight, s.data.length - 2) } as Partial<Slide>)}>✕</button>
+          </div>
+        ))}
+        <button className="btn sm" style={{ alignSelf: 'flex-start' }} disabled={readOnly || s.data.length >= 8} onClick={() => onChange({ data: [...s.data, { label: '', value: 0 }] } as Partial<Slide>)}>+ Add point</button>
+        <label style={{ flexDirection: 'row', alignItems: 'center', gap: 8, fontWeight: 400 }}>
+          <input type="checkbox" style={{ width: 'auto' }} disabled={readOnly} checked={s.illustrative} onChange={(e) => onChange({ illustrative: e.target.checked } as Partial<Slide>)} />
+          Made-up numbers for illustration (must say ตัวเลขสมมติ in the note)
+        </label>
+        {ta('Note under the chart', s.note, 'note', 2)}
+      </> : null}
+
+      {config.mascot.enabled ? (
+        <div className="card col" style={{ background: '#f6f8ff' }}>
+          <h3 style={{ margin: 0 }}>Mascot{config.mascot.name ? ` · ${config.mascot.name}` : ''}</h3>
+          <label style={{ flexDirection: 'row', alignItems: 'center', gap: 8, fontWeight: 400 }}>
+            <input type="checkbox" style={{ width: 'auto' }} disabled={readOnly} checked={!!s.mascot} onChange={(e) => onChange({ mascot: e.target.checked ? { mood: s.type === 'chart' ? 'surprised' : 'idle', say: '', look: 'auto' } : undefined } as Partial<Slide>)} />
+            Show the mascot on this slide
+          </label>
+          {s.mascot ? (
+            <>
+              <div className="row">
+                <label style={{ flex: 1 }}>Expression
+                  <select disabled={readOnly} value={s.mascot.mood} onChange={(e) => onChange({ mascot: { ...s.mascot!, mood: e.target.value as Mood } } as Partial<Slide>)}>
+                    {MOODS.map((m) => <option key={m}>{m}</option>)}
+                  </select>
+                </label>
+                <label style={{ flex: 1 }}>Eyes look
+                  <select disabled={readOnly} value={s.mascot.look} onChange={(e) => onChange({ mascot: { ...s.mascot!, look: e.target.value as 'auto' } } as Partial<Slide>)}>
+                    {['auto', 'left', 'right', 'up', 'down', 'center'].map((m) => <option key={m}>{m}</option>)}
+                  </select>
+                </label>
+              </div>
+              <label>Speech bubble (≤ 40 characters, optional)
+                <input readOnly={readOnly} value={s.mascot.say} placeholder="เช่น ถูกกว่ากัน 80 เท่าเลยครับ" onChange={(e) => onChange({ mascot: { ...s.mascot!, say: e.target.value } } as Partial<Slide>)} />
+              </label>
+              <p className="small muted" style={{ margin: 0 }}>"auto" eyes look at the highlighted chart point, or at the text on other slides.</p>
+            </>
+          ) : null}
+        </div>
+      ) : null}
 
       <div className="card col" style={{ background: '#faf9ff' }}>
         <h3 style={{ margin: 0 }}>Image</h3>

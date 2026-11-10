@@ -29,14 +29,24 @@
       "title": "เขียน prompt\nให้ Claude\n**เข้าใจตั้งแต่แรก**",
       "subtitle": "5 เทคนิคจากคู่มือของ Anthropic",
       "imagePrompt": "A friendly glossy 3D chat bubble and a glowing pencil writing on a floating glass card, small sparkles around, centered composition with empty space at the top",
-      "image": ""
+      "image": "",
+      "mascot": {
+        "mood": "happy",
+        "say": "",
+        "look": "auto"
+      }
     },
     {
       "type": "statement",
       "title": "ถามกว้าง ๆ\nก็ได้คำตอบ**กว้าง ๆ**",
       "body": "Claude ไม่ได้อ่านใจเรา ยิ่งบอกชัดว่าอยากได้อะไร ใช้ทำอะไร ส่งให้ใคร คำตอบก็ยิ่งตรงงาน",
       "imagePrompt": "A small cute 3D character looking puzzled at a foggy cloud-shaped speech bubble, next to a neat glowing checklist card, comparison concept",
-      "image": ""
+      "image": "",
+      "mascot": {
+        "mood": "think",
+        "say": "เคยเป็นแบบนี้ไหมครับ",
+        "look": "auto"
+      }
     },
     {
       "type": "step",
@@ -96,14 +106,19 @@
         "แยกข้อมูลด้วยแท็ก XML",
         "กำหนดบทบาทให้ชัด"
       ],
-      "cta": "เซฟไว้ใช้ตอนเขียน prompt ครั้งหน้า",
+      "cta": "เซฟไว้ใช้ครั้งหน้า",
       "imagePrompt": "",
-      "image": ""
+      "image": "",
+      "mascot": {
+        "mood": "talk",
+        "say": "ลองทีละข้อก็ได้ครับ",
+        "look": "auto"
+      }
     }
   ],
   "captions": {
-    "instagram": "เขียน prompt ให้ Claude เข้าใจตั้งแต่ครั้งแรก\n\n5 เทคนิคจากคู่มือ prompt engineering ของ Anthropic\n1. บอกให้ชัด อย่าให้เดา\n2. ให้ตัวอย่าง 1–2 อัน\n3. ให้คิดทีละขั้นก่อนตอบ\n4. แยกข้อมูลด้วยแท็ก XML\n5. กำหนดบทบาท\n\nสไลด์ก่อนสุดท้ายมีสูตรรวมให้ก๊อปไปลอง เซฟไว้ใช้ได้เลย\n\nที่มา: platform.claude.com\n#Claude #PromptEngineering #ใช้AIทำงาน #AIภาษาไทย",
-    "facebook": "เคยถาม Claude แล้วได้คำตอบกว้าง ๆ ไม่ตรงใจไหม ส่วนใหญ่ไม่ใช่เพราะ AI ไม่เก่ง แต่เพราะเรายังบอกไม่ครบ\n\nคู่มือ prompt engineering ของ Anthropic (บริษัทที่สร้าง Claude) แนะนำเทคนิคพื้นฐานไว้หลายข้อ เลือกมา 5 ข้อที่เอาไปใช้ได้ทันที\n• บอกเป้าหมาย คนอ่าน และหน้าตาผลลัพธ์ให้ชัด\n• ให้ตัวอย่างสไตล์ที่อยากได้\n• งานที่ต้องวิเคราะห์ ให้คิดทีละขั้นก่อนสรุป\n• แยกข้อมูลกับคำสั่งด้วยแท็ก XML\n• กำหนดบทบาท เช่น นักการตลาด ครู หรือนักบัญชี\n\nในโพสต์มีสูตรรวมทั้ง 5 ข้อให้ลองใช้ด้วย\n\nอ่านคู่มือต้นฉบับ: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/be-clear-and-direct\n\nข้อไหนที่ยังไม่เคยลอง เล่าในคอมเมนต์ได้นะ\n#Claude #ใช้AIทำงาน",
+    "instagram": "เขียน prompt ให้ Claude เข้าใจตั้งแต่ครั้งแรก\n\n5 เทคนิคจากคู่มือ prompt engineering ของ Anthropic\n1. บอกให้ชัด อย่าให้เดา\n2. ให้ตัวอย่าง 1–2 อัน\n3. ให้คิดทีละขั้นก่อนตอบ\n4. แยกข้อมูลด้วยแท็ก XML\n5. กำหนดบทบาท\n\nสไลด์ก่อนสุดท้ายมีสูตรรวมให้ก๊อปไปลอง เซฟไว้ใช้ได้เลยครับ\n\nที่มา: platform.claude.com\n#Claude #PromptEngineering #ใช้AIทำงาน #AIภาษาไทย",
+    "facebook": "เคยถาม Claude แล้วได้คำตอบกว้าง ๆ ไม่ตรงใจไหม ส่วนใหญ่ไม่ใช่เพราะ AI ไม่เก่ง แต่เพราะเรายังบอกไม่ครบ\n\nคู่มือ prompt engineering ของ Anthropic (บริษัทที่สร้าง Claude) แนะนำเทคนิคพื้นฐานไว้หลายข้อ เลือกมา 5 ข้อที่เอาไปใช้ได้ทันที\n• บอกเป้าหมาย คนอ่าน และหน้าตาผลลัพธ์ให้ชัด\n• ให้ตัวอย่างสไตล์ที่อยากได้\n• งานที่ต้องวิเคราะห์ ให้คิดทีละขั้นก่อนสรุป\n• แยกข้อมูลกับคำสั่งด้วยแท็ก XML\n• กำหนดบทบาท เช่น นักการตลาด ครู หรือนักบัญชี\n\nในโพสต์มีสูตรรวมทั้ง 5 ข้อให้ลองใช้ด้วย\n\nอ่านคู่มือต้นฉบับ: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/be-clear-and-direct\n\nข้อไหนที่ยังไม่เคยลอง เล่าในคอมเมนต์ได้เลยครับ\n#Claude #ใช้AIทำงาน",
     "altText": "คารูเซล 9 ภาพ พื้นหลังขาวอมม่วงอ่อน หัวข้อ เขียน prompt ให้ Claude เข้าใจตั้งแต่แรก อธิบาย 5 เทคนิค ได้แก่ บอกให้ชัด ให้ตัวอย่าง ให้คิดทีละขั้น แยกข้อมูลด้วยแท็ก XML และกำหนดบทบาท มีตัวอย่าง prompt สำหรับร้านกาแฟให้คัดลอกไปใช้ และสไลด์สรุปท้ายโพสต์"
   },
   "sources": [
@@ -127,6 +142,10 @@
     {
       "at": "2026-11-10T09:00:00.000Z",
       "event": "created (claude-code sample)"
+    },
+    {
+      "at": "2026-11-10T10:00:00.000Z",
+      "event": "voice set to ครับ; mascot added to 3 slides"
     }
   ],
   "createdAt": "2026-11-10T09:00:00.000Z",

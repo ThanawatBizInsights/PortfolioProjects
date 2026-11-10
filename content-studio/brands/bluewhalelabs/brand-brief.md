@@ -20,8 +20,15 @@ Explain AI in plain Thai so people can actually use it, with Claude as the ancho
 3. Office workers who want practical AI workflows
 
 ## Voice (ASSUMPTION until confirmed)
-Friendly, practical, plain Thai, "พี่ที่ลองมาแล้วมาเล่าให้ฟัง". Ending particles: **to confirm** (ครับ / ค่ะ / none).
+Friendly, practical, plain Thai, "พี่ที่ลองมาแล้วมาเล่าให้ฟัง". **Ending particle: ครับ** (confirmed by the owner, 2026-11-10). Use it naturally in captions and speech bubbles, not on every slide heading.
 English tool names stay in English (Claude, prompt, Artifacts, Vercel). Every new term gets a one-line Thai explanation.
+
+## Name (confirmed 2026-11-10)
+On slides: **balena studio** wordmark (lowercase, matching the logo). The Facebook Page name stays "Bluewhalelabs - เข้าใจ AI ให้มากขึ้น".
+
+## Mascot
+**น้องบาเลน่า**, an original pixel-art blue whale ("balena" = whale), drawn in code (`apps/carousel-studio/components/PixelWhale.tsx`) and owned by the brand. Expressions: idle, happy (squint + spout), think (?), talk, surprised (!); the eyes glance at the chart highlight or the text.
+The owner asked about using Clawd (Anthropic's Claude Code mascot). We use our own whale instead, so the Page never looks affiliated with or endorsed by Anthropic.
 
 ## Visual identity (from the Page)
 - Light, airy background (white → pale lavender), soft glass cards, blue `#2F5BFF`→ purple `#7B4DFF` gradient accents (**colours estimated from the screenshot**; get the real hex values or logo files)

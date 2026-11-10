@@ -61,6 +61,19 @@ export function SettingsForm({ initial, modes }: { initial: Config; modes: Modes
       </div>
 
       <div className="card col">
+        <h2>Mascot</h2>
+        <label style={{ flexDirection: 'row', alignItems: 'center', gap: 8, fontWeight: 400 }}>
+          <input type="checkbox" style={{ width: 'auto' }} checked={c.mascot.enabled} onChange={(e) => set({ mascot: { ...c.mascot, enabled: e.target.checked } })} />
+          Use the pixel whale mascot on slides and in the app
+        </label>
+        <div className="row">
+          <label style={{ flex: 1 }}>Name<input value={c.mascot.name} onChange={(e) => set({ mascot: { ...c.mascot, name: e.target.value } })} /></label>
+          <label style={{ width: 120 }}>Body<input type="color" value={c.mascot.body} onChange={(e) => set({ mascot: { ...c.mascot, body: e.target.value } })} style={{ height: 38, padding: 2 }} /></label>
+          <label style={{ width: 120 }}>Belly<input type="color" value={c.mascot.belly} onChange={(e) => set({ mascot: { ...c.mascot, belly: e.target.value } })} style={{ height: 38, padding: 2 }} /></label>
+        </div>
+      </div>
+
+      <div className="card col">
         <h2>Posting slots (Asia/Bangkok)</h2>
         {c.slots.map((s, i) => (
           <div key={i} className="row">

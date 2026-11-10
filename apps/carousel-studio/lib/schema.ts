@@ -2,9 +2,17 @@ import { z } from 'zod';
 
 // ---------- Slides ----------
 // Text fields support "**word**" to highlight with the brand gradient and "\n" for line breaks.
+export const MascotSchema = z.object({
+  mood: z.enum(['idle', 'happy', 'think', 'talk', 'surprised']).default('idle'),
+  say: z.string().default(''), // short speech bubble, ≤ 40 Thai characters
+  look: z.enum(['auto', 'left', 'right', 'up', 'down', 'center']).default('auto'), // auto = at the chart highlight / content
+});
+export type SlideMascot = z.infer<typeof MascotSchema>;
+
 const imageFields = {
   imagePrompt: z.string().default(''), // what to ask ChatGPT / Grok / an image API for (never text in the image)
   image: z.string().default(''), // file name inside the post's images/ folder
+  mascot: MascotSchema.optional(), // the brand mascot on this slide (omit for none)
 };
 
 export const SlideSchema = z.discriminatedUnion('type', [
@@ -13,10 +21,24 @@ export const SlideSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('step'), number: z.number().int().optional(), title: z.string(), body: z.string().default(''), ...imageFields }),
   z.object({ type: z.literal('prompt'), title: z.string(), prompt: z.string(), note: z.string().default(''), ...imageFields }),
   z.object({ type: z.literal('summary'), title: z.string(), bullets: z.array(z.string()).default([]), cta: z.string().default(''), ...imageFields }),
+  // Single-series chart (one highlighted point). Real numbers need a source; made-up ones set illustrative: true.
+  z.object({
+    type: z.literal('chart'),
+    title: z.string(),
+    subtitle: z.string().default(''), // what is measured + unit, e.g. "ราคา output ต่อ 1 ล้าน token (USD)"
+    chartKind: z.enum(['bar', 'line']).default('bar'),
+    data: z.array(z.object({ label: z.string(), value: z.number() })).default([]),
+    highlight: z.number().int().default(0),
+    valuePrefix: z.string().default(''),
+    valueSuffix: z.string().default(''),
+    note: z.string().default(''),
+    illustrative: z.boolean().default(false),
+    ...imageFields,
+  }),
 ]);
 export type Slide = z.infer<typeof SlideSchema>;
 export type SlideType = Slide['type'];
-export const SLIDE_TYPES: SlideType[] = ['cover', 'statement', 'step', 'prompt', 'summary'];
+export const SLIDE_TYPES: SlideType[] = ['cover', 'statement', 'step', 'chart', 'prompt', 'summary'];
 
 // ---------- Post ----------
 export const STATUSES = ['idea', 'draft', 'ready-for-review', 'approved', 'scheduled', 'published', 'failed'] as const;
@@ -96,6 +118,9 @@ export const ConfigSchema = z.object({
   pillars: z.array(z.string()).default([]),
   imageStyle: z.string().default(''),
   imageTools: z.array(z.string()).default([]),
+  mascot: z
+    .object({ enabled: z.boolean().default(true), name: z.string().default(''), body: z.string().default('#2F5BFF'), belly: z.string().default('#DCE3FF') })
+    .default({}),
   modes: z
     .object({
       generation: z.enum(['claude-chat', 'claude-code', 'api']).default('claude-chat'),
