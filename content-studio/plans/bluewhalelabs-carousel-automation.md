@@ -13,7 +13,7 @@ A small web app that, every week, finds useful and **verified** things to say ab
 
 | Decision | Choice | Why |
 |---|---|---|
-| Who writes the Thai text | Claude (`claude-opus-5-5`) via the Claude API | Best at research, structure and natural Thai. It uses the server-side web search and web fetch tools, limited to official sources. |
+| Who writes the Thai text | Claude, via **Claude Code scheduled tasks on the owner's subscription** (see §9; the API is the fallback) | Best at research, structure and natural Thai. It uses the server-side web search and web fetch tools, limited to official sources. |
 | Who makes the pictures | An image model (OpenAI GPT Image or Google Gemini image) **for illustrations only, with no text in the image** | Thai text from image models is still unreliable: tests in Sept 2026 found some models unreadable in Thai, and even the best aren't perfect. A misspelled Thai slide kills trust. |
 | Who puts Thai text on slides | **Our own template renderer** (HTML/CSS + real Thai fonts → JPEG) | Every vowel and tone mark is guaranteed correct, the brand stays consistent, and text can be edited in one click without re-generating the image. |
 | "MCP with ChatGPT / image AI"? | **Inside the app: call the image APIs directly.** MCP is for when *you and I* work in Claude Code. | A scheduled app runs without Claude Code open, so direct API calls are simpler, cheaper and more reliable. Later we can expose the app *as* an MCP server, so you could tell Claude "make a carousel about X" from chat. |
@@ -138,12 +138,35 @@ Proposed, saved in `brands/bluewhalelabs/automation.md` (currently `enabled: fal
 
 While the app is being built, we can still make the first carousels with the current Content Studio workflow, so the Page isn't empty.
 
-## 9. Rough running cost (estimate, not a quote)
+## 9. Budget: run it on what the owner already pays for (updated 2026-11-10)
 
-- **Claude:** Opus 5.5 is $4 per million input tokens and $20 per million output tokens. A research + write + review run is roughly 50–100k input and 10–20k output tokens, so about **$0.40–0.80 per carousel**. Web search adds a small per-search fee.
-- **Images:** 2–4 AI illustrations per carousel. Price depends on the model and quality, so we'll measure it in Phase 0.
-- **Vercel + Supabase:** likely the free tiers at this volume.
-- **Total for ~14 carousels a month:** likely around US$15–40. We'll replace this with measured numbers after Phase 0.
+The owner already has: a **Claude** yearly subscription, a **ChatGPT** yearly subscription, and **฿1,000 of Fuzion AI credits** (the Pro pack: 1,050 credits, which never expire).
+
+**Important:** the Claude and ChatGPT app subscriptions **don't include API access**, which is billed separately. So the original "Claude API on Vercel" design would add a new bill. The redesign below avoids that.
+
+### Zero-extra-cost design
+
+| Job | Was | Now | Extra cost |
+|---|---|---|---|
+| Research + Thai writing + QC | Claude API | **Claude Code scheduled tasks** (cloud sessions on the Claude subscription): Sunday 18:00 weekly batch, 07:00 daily news check | ฿0 (uses the plan's usage limits, shared with normal chat) |
+| Slide rendering | Server renderer | The same Remotion/Chromium renderer already in this repo, run inside the scheduled session | ฿0 |
+| Illustrations | Image API | **Fuzion credits** (Grok Image ≈ 1 credit, Seedream 5.0 Pro ≈ 2 credits per image, from the plan page), or ChatGPT image generation in the app; plus free code-drawn icons and diagrams | from the existing ฿1,000 |
+| Review | Web app | An approval page and push notification on the phone: reply "approve" | ฿0 |
+| Posting at exact times | Vercel app | A small no-AI publisher script on a free scheduler (Supabase Edge Function + cron, or GitHub Actions), plus Facebook's own scheduling | ฿0 within free tiers |
+| Meta Graph API | | | free |
+
+### Fuzion credit math (approximate, from the "~" figures on Fuzion's plan page)
+- 14 carousels a month × 2 AI images (cover + 1 hero) = 28 images.
+- With one retry each, about 56 generations a month.
+- **Grok Image (~1 credit):** about 56 credits a month, so ฿1,000 lasts **about 18 months**.
+- **Seedream 5.0 Pro (~2 credits):** about 112 credits a month, so it lasts **about 9 months**.
+
+### Limits to know
+1. **No public Fuzion API was found** (search, 2026-11-10). Unless Fuzion offers one, image generation is a **manual 5–10 minute weekly step**: Claude writes the batch of image prompts, the owner generates them in Fuzion or ChatGPT, and drops the files into the post folder. Everything else stays automatic. If Fuzion does have an API key or developer page, this step can be automated.
+2. **Subscription usage limits:** scheduled runs share the Claude plan's limits with normal chatting. A weekly batch of 3 carousels plus short daily news checks should be modest on Max. On Pro, heavy chat days could collide, so run the batch at a quiet time.
+3. **ChatGPT images** work only manually in the app, because the API is billed separately.
+4. **Free tiers:** Vercel Hobby is for non-commercial use. If the Page earns money, use the Supabase or GitHub Actions publisher instead.
+5. **Network:** this cloud environment currently blocks Meta's API host. It must be allowed (with the owner's approval) before posting from here.
 
 ## 10. Risks and how we handle them
 
