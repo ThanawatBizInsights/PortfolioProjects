@@ -1,6 +1,6 @@
 # Plan: AI carousel autopilot for Bluewhalelabs (Facebook + Instagram)
 
-Status: **proposal for discussion** (2026-11-10). Nothing is built yet.
+Status: **Phase 1 (manual-first MVP) built** in `apps/carousel-studio/` (2026-11-10). Writing goes through Claude chat or the Claude Code queue, images are uploaded by hand, and posting uses a manual kit. Automated modes are placeholders.
 Brand files: `content-studio/brands/bluewhalelabs/`
 
 ---

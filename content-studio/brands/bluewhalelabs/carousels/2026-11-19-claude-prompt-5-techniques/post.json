@@ -1,0 +1,134 @@
+{
+  "id": "2026-11-19-claude-prompt-5-techniques",
+  "brand": "bluewhalelabs",
+  "title": "5 เทคนิคเขียน prompt ให้ Claude ตามคู่มือของ Anthropic",
+  "pillar": "Prompt สูตรพร้อมใช้",
+  "audience": "คนทำงานและครีเอเตอร์ที่เริ่มใช้ Claude แต่ยังได้คำตอบกว้าง ๆ ไม่ตรงงาน",
+  "takeaway": "บอก Claude ให้ชัด ให้ตัวอย่าง ให้คิดก่อนตอบ แยกข้อมูลด้วยแท็ก และกำหนดบทบาท คำตอบจะตรงงานขึ้นมาก",
+  "hooks": [
+    {
+      "text": "เขียน prompt ให้ Claude เข้าใจตั้งแต่แรก",
+      "mechanism": "demo"
+    },
+    {
+      "text": "ถามกว้าง ๆ ก็ได้คำตอบกว้าง ๆ",
+      "mechanism": "relatable problem"
+    },
+    {
+      "text": "Anthropic เขียนคู่มือ prompt ไว้ เราสรุปให้ใน 9 สไลด์",
+      "mechanism": "bold-but-true"
+    }
+  ],
+  "selectedHook": 0,
+  "status": "draft",
+  "scheduledAt": "2026-11-19T19:45:00+07:00",
+  "slides": [
+    {
+      "type": "cover",
+      "kicker": "Prompt สูตรพร้อมใช้",
+      "title": "เขียน prompt\nให้ Claude\n**เข้าใจตั้งแต่แรก**",
+      "subtitle": "5 เทคนิคจากคู่มือของ Anthropic",
+      "imagePrompt": "A friendly glossy 3D chat bubble and a glowing pencil writing on a floating glass card, small sparkles around, centered composition with empty space at the top",
+      "image": ""
+    },
+    {
+      "type": "statement",
+      "title": "ถามกว้าง ๆ\nก็ได้คำตอบ**กว้าง ๆ**",
+      "body": "Claude ไม่ได้อ่านใจเรา ยิ่งบอกชัดว่าอยากได้อะไร ใช้ทำอะไร ส่งให้ใคร คำตอบก็ยิ่งตรงงาน",
+      "imagePrompt": "A small cute 3D character looking puzzled at a foggy cloud-shaped speech bubble, next to a neat glowing checklist card, comparison concept",
+      "image": ""
+    },
+    {
+      "type": "step",
+      "number": 1,
+      "title": "บอกให้ชัด **อย่าให้เดา**",
+      "body": "บอกเป้าหมาย คนอ่าน และหน้าตาผลลัพธ์ที่อยากได้ เช่น ขอ 3 ข้อ ข้อละไม่เกิน 2 บรรทัด ภาษากันเอง",
+      "imagePrompt": "",
+      "image": ""
+    },
+    {
+      "type": "step",
+      "number": 2,
+      "title": "ให้**ตัวอย่าง**สัก 1–2 อัน",
+      "body": "อยากได้สไตล์ไหน แปะตัวอย่างให้ดู Claude จะจับโทนและรูปแบบได้แม่นกว่าการอธิบายยาว ๆ",
+      "imagePrompt": "",
+      "image": ""
+    },
+    {
+      "type": "step",
+      "number": 3,
+      "title": "ให้**คิดทีละขั้น**ก่อนตอบ",
+      "body": "งานที่ต้องวิเคราะห์ ลองบอกว่า “ค่อย ๆ คิดทีละขั้นก่อนสรุป” คำตอบจะมีเหตุผลรองรับมากขึ้น",
+      "imagePrompt": "",
+      "image": ""
+    },
+    {
+      "type": "step",
+      "number": 4,
+      "title": "แยกข้อมูลด้วย**แท็ก XML**",
+      "body": "ใส่ข้อมูลไว้ใน <article>…</article> แยกจากคำสั่ง Claude จะไม่สับสนว่าส่วนไหนคือข้อมูล ส่วนไหนคือสิ่งที่ต้องทำ",
+      "imagePrompt": "",
+      "image": ""
+    },
+    {
+      "type": "step",
+      "number": 5,
+      "title": "กำหนด**บทบาท**ให้ Claude",
+      "body": "เริ่มด้วย “คุณคือนักการตลาดของร้านกาแฟเล็ก ๆ” Claude จะเลือกมุมมองและคำศัพท์ให้เหมาะกับงาน",
+      "imagePrompt": "",
+      "image": ""
+    },
+    {
+      "type": "prompt",
+      "title": "ลองรวมทั้ง 5 ข้อในสูตรเดียว",
+      "prompt": "คุณคือนักการตลาดของร้านกาแฟเล็ก ๆ ในเชียงใหม่\nช่วยเขียนแคปชันโปรโมตเมนูใหม่ 3 แบบ ให้คนวัยทำงานอ่าน\n<menu>ลาเต้มะพร้าวน้ำหอม</menu>\n<example>เช้านี้ขอหวานน้อย แต่สดชื่นมาก</example>\nค่อย ๆ คิดก่อนว่าลูกค้าอยากรู้อะไร แล้วตอบเป็นข้อ ข้อละไม่เกิน 2 บรรทัด",
+      "note": "เปลี่ยนเมนูกับชื่อร้านเป็นของคุณได้เลย",
+      "imagePrompt": "",
+      "image": ""
+    },
+    {
+      "type": "summary",
+      "title": "สรุป **5 เทคนิค**",
+      "bullets": [
+        "บอกให้ชัดว่าอยากได้อะไร",
+        "ให้ตัวอย่าง 1–2 อัน",
+        "ให้คิดทีละขั้นก่อนตอบ",
+        "แยกข้อมูลด้วยแท็ก XML",
+        "กำหนดบทบาทให้ชัด"
+      ],
+      "cta": "เซฟไว้ใช้ตอนเขียน prompt ครั้งหน้า",
+      "imagePrompt": "",
+      "image": ""
+    }
+  ],
+  "captions": {
+    "instagram": "เขียน prompt ให้ Claude เข้าใจตั้งแต่ครั้งแรก\n\n5 เทคนิคจากคู่มือ prompt engineering ของ Anthropic\n1. บอกให้ชัด อย่าให้เดา\n2. ให้ตัวอย่าง 1–2 อัน\n3. ให้คิดทีละขั้นก่อนตอบ\n4. แยกข้อมูลด้วยแท็ก XML\n5. กำหนดบทบาท\n\nสไลด์ก่อนสุดท้ายมีสูตรรวมให้ก๊อปไปลอง เซฟไว้ใช้ได้เลย\n\nที่มา: platform.claude.com\n#Claude #PromptEngineering #ใช้AIทำงาน #AIภาษาไทย",
+    "facebook": "เคยถาม Claude แล้วได้คำตอบกว้าง ๆ ไม่ตรงใจไหม ส่วนใหญ่ไม่ใช่เพราะ AI ไม่เก่ง แต่เพราะเรายังบอกไม่ครบ\n\nคู่มือ prompt engineering ของ Anthropic (บริษัทที่สร้าง Claude) แนะนำเทคนิคพื้นฐานไว้หลายข้อ เลือกมา 5 ข้อที่เอาไปใช้ได้ทันที\n• บอกเป้าหมาย คนอ่าน และหน้าตาผลลัพธ์ให้ชัด\n• ให้ตัวอย่างสไตล์ที่อยากได้\n• งานที่ต้องวิเคราะห์ ให้คิดทีละขั้นก่อนสรุป\n• แยกข้อมูลกับคำสั่งด้วยแท็ก XML\n• กำหนดบทบาท เช่น นักการตลาด ครู หรือนักบัญชี\n\nในโพสต์มีสูตรรวมทั้ง 5 ข้อให้ลองใช้ด้วย\n\nอ่านคู่มือต้นฉบับ: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/be-clear-and-direct\n\nข้อไหนที่ยังไม่เคยลอง เล่าในคอมเมนต์ได้นะ\n#Claude #ใช้AIทำงาน",
+    "altText": "คารูเซล 9 ภาพ พื้นหลังขาวอมม่วงอ่อน หัวข้อ เขียน prompt ให้ Claude เข้าใจตั้งแต่แรก อธิบาย 5 เทคนิค ได้แก่ บอกให้ชัด ให้ตัวอย่าง ให้คิดทีละขั้น แยกข้อมูลด้วยแท็ก XML และกำหนดบทบาท มีตัวอย่าง prompt สำหรับร้านกาแฟให้คัดลอกไปใช้ และสไลด์สรุปท้ายโพสต์"
+  },
+  "sources": [
+    {
+      "claim": "Anthropic's guide: be clear and direct; explicit, specific instructions improve results",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/be-clear-and-direct",
+      "checkedAt": "2026-11-10"
+    },
+    {
+      "claim": "Anthropic's prompt engineering best practices (examples, step-by-step thinking, XML tags, roles)",
+      "url": "https://claude.com/blog/best-practices-for-prompt-engineering",
+      "checkedAt": "2026-11-10"
+    }
+  ],
+  "dataAsOf": "2026-11-10",
+  "generation": {
+    "mode": "claude-code",
+    "notes": "Sample drafted by Claude Code on 2026-11-10. Sources were found via web search; their full text couldn't be opened from the cloud session, so open both links once before approving."
+  },
+  "history": [
+    {
+      "at": "2026-11-10T09:00:00.000Z",
+      "event": "created (claude-code sample)"
+    }
+  ],
+  "createdAt": "2026-11-10T09:00:00.000Z",
+  "updatedAt": "2026-11-10T09:00:00.000Z"
+}

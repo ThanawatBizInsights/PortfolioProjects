@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-10T05:36:25.808Z",
+  "contentHash": "b2c5135af8b6e6cb",
+  "files": [
+    {
+      "name": "slide-01.jpg",
+      "sha256": "1aa9f0f908f53b3f9b06a35701e6a88ff9a77d31ddda53525ae02d16fb4f97d8"
+    },
+    {
+      "name": "slide-02.jpg",
+      "sha256": "c78f30fc134c0a684147e381f5d6b88f8df1ec0b7afebc5e5acb0aa05b37dd21"
+    },
+    {
+      "name": "slide-03.jpg",
+      "sha256": "feef96e5f6a21cef3e125b58bd48c559dac2193ec9c44f15f2abb7b319ab85c4"
+    },
+    {
+      "name": "slide-04.jpg",
+      "sha256": "f082391241a5cd6ae0310530faa3b7b7ec2e1a21a3cf266efe7d03134266b2a7"
+    },
+    {
+      "name": "slide-05.jpg",
+      "sha256": "6cd35f1bdeb6ce9e3e9f3afe6d7e2f868023b43b1f0dbfe5e2a33a4c75bdb055"
+    },
+    {
+      "name": "slide-06.jpg",
+      "sha256": "89044c6c5518f140a8e9619b77af60fff6c718ce50ff1613d67cf1720c19edd5"
+    },
+    {
+      "name": "slide-07.jpg",
+      "sha256": "7735f13a4a7d743f2ee18bbf13abd0433806e3b6f6f022a0e839f8b69df6925b"
+    },
+    {
+      "name": "slide-08.jpg",
+      "sha256": "c07513afdbb9a80283eb793720232b59b10ed99c63228dc67f7acf69fc4dff25"
+    },
+    {
+      "name": "slide-09.jpg",
+      "sha256": "1837a349840dcd1142eb0e0dda033fe9484ebacbc654caac85dc8ad8bfe6d785"
+    }
+  ]
+}

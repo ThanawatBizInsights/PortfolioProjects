@@ -1,0 +1,31 @@
+{
+  "brand": "bluewhalelabs",
+  "displayName": "balena studio",
+  "pageName": "Bluewhalelabs - เข้าใจ AI ให้มากขึ้น",
+  "instagramHandle": "",
+  "particles": "unset",
+  "colors": {
+    "bg": "#FFFFFF",
+    "bg2": "#EEEAFF",
+    "ink": "#151536",
+    "muted": "#5B5F7E",
+    "accent1": "#2F5BFF",
+    "accent2": "#7B4DFF",
+    "card": "rgba(255,255,255,0.72)",
+    "dark": "#16163A"
+  },
+  "slots": [
+    { "day": "Tue", "time": "12:15", "pillar": "Claude ใช้ยังไง / AI ทำงานจริง" },
+    { "day": "Thu", "time": "19:45", "pillar": "Prompt สูตรพร้อมใช้" },
+    { "day": "Sat", "time": "10:15", "pillar": "ศัพท์ AI / เบื้องหลัง" }
+  ],
+  "pillars": ["Claude ใช้ยังไง", "Prompt สูตรพร้อมใช้", "AI ทำงานจริง", "อัปเดต AI ที่ควรรู้", "ศัพท์ AI / เข้าใจผิดบ่อย", "เบื้องหลังการสร้างระบบ"],
+  "imageStyle": "soft 3D glassmorphism illustration, clean white and pale lavender background, blue (#2F5BFF) to purple (#7B4DFF) gradient accents, gentle studio lighting, friendly and modern, portrait 4:5, absolutely no text, no letters, no numbers, no logos, no watermarks",
+  "imageTools": ["ChatGPT (manual)", "Grok Image via Fuzion (manual)", "Seedream 5.0 Pro via Fuzion (manual)"],
+  "modes": {
+    "generation": "claude-chat",
+    "images": "manual",
+    "publishing": "manual"
+  },
+  "automation": { "enabled": false }
+}

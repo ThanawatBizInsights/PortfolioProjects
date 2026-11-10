@@ -4,6 +4,7 @@ This repo holds two things:
 
 1. **Data-analysis portfolio projects** at the root (`COVID PortfolioProject.sql`, `Movie Correlation Project.ipynb`).
 2. **Content Studio** (`content-studio/`): a reusable AI workflow for planning, writing, animating, reviewing and publishing Thai short-form content for Facebook and Instagram.
+3. **Carousel Studio app** (`apps/carousel-studio/`): a Next.js app for Thai AI carousels (manual-first, automation-ready). Posts live in `content-studio/brands/<brand>/carousels/<id>/post.json`. See its README.
 
 ## Content Studio: ground rules
 
@@ -48,7 +49,17 @@ node render.mjs --spec <spec.json> --theme <theme.json> --out=out/full.mp4
 # Live preview / tweak animations
 cd content-studio/renderer && npx remotion studio src/index.ts
 
+# Carousel Studio app (http://localhost:3100)
+cd apps/carousel-studio && npm run build && npm start
+
 # Duplicate check / log a publish result
 python3 content-studio/scripts/publish_log.py check  --brand <slug> --platform instagram --account <handle> --media <file.mp4>
 python3 content-studio/scripts/publish_log.py record --help
 ```
+
+## Drafting queued carousels (when asked to "draft the queued carousels")
+
+1. Read `content-studio/brands/<brand>/carousel-queue.json` and take the items with `status: "queued"`.
+2. For each one, follow the brief in `apps/carousel-studio/lib/claudePrompt.ts` (same rules: official sources with URLs, no text in image prompts, slide limits, brand voice from `carousel.config.json` and `brand-brief.md`).
+3. Write `content-studio/brands/<brand>/carousels/<YYYY-MM-DD>-<slug>/post.json` that validates against `PostSchema` in `apps/carousel-studio/lib/schema.ts`, with `status: "draft"` and `generation.mode: "claude-code"`.
+4. Set the queue item to `status: "drafted"` with `postId`. Never approve, schedule or publish; the owner does that in the app.
